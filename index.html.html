@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="tr" class="theme-light"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almanca Kelime Kartları</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Temel Stiller */
+        .flip-card { background-color: transparent; width: 100%; max-width: 400px; height: 250px; perspective: 1000px; margin: 20px auto; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.7s; transform-style: preserve-3d; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); border-radius: 16px; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; border-radius: 16px; color: white; }
+        .flip-card-back { transform: rotateY(180deg); }
+        .word { font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
+        .translation { font-size: 1.5rem; font-weight: 500; }
+        .example-sentence { font-size: 1rem; margin-top: 15px; font-style: italic; opacity: 0.9; }
+        .pronunciation-btn { background-color: rgba(255, 255, 255, 0.2); color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin-top: 15px; transition: background-color 0.3s; }
+        .pronunciation-btn:hover { background-color: rgba(255, 255, 255, 0.3); }
+        .nav-btn { color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 500; transition: background-color 0.3s; margin: 0 5px; }
+        .nav-btn:disabled { background-color: #9ca3af !important; cursor: not-allowed; }
+        .theme-list-item { padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; margin-bottom: 1rem; }
+        .theme-list-item:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .progress-bar-container { width: 100%; max-width: 400px; border-radius: 8px; margin: 15px auto; overflow: hidden; }
+        .progress-bar { height: 10px; width: 0%; border-radius: 8px; transition: width 0.5s ease-in-out, background-color 0.3s; }
+        .no-content-message { font-size: 1.2rem; margin-top: 20px; }
+        .section-card { padding: 1.5rem; md:padding: 2rem; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; text-align: center; }
+        .section-card:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(0,0,0,0.15); }
+        .section-icon { font-size: 2.5rem; md:font-size: 3rem; margin-bottom: 1rem; }
+        .test-option-btn { display: block; width: 100%; padding: 1rem; margin-bottom: 0.75rem; border-radius: 8px; font-size: 1rem; font-weight: 500; text-align: left; transition: background-color 0.2s, transform 0.2s; border: 1px solid transparent; }
+        .test-option-btn:hover { transform: scale(1.02); }
+        .test-option-btn.correct { background-color: #10b981 !important; color: white !important; border-color: #059669 !important; }
+        .test-option-btn.incorrect { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+        .test-feedback { font-size: 1.1rem; font-weight: 500; margin-top: 1rem; padding: 0.75rem; border-radius: 8px; }
+        .test-question-word-clickable { cursor: pointer; font-weight: bold; text-decoration: underline; }
+        
+        #themeMenuButton { transition: color 0.3s; }
+        .theme-option-item.active-item { font-weight: 600; }
+
+        .note-content { padding: 1rem; border-radius: 8px; margin-top: 1rem; max-height: calc(100vh - 250px); overflow-y: auto;}
+        .note-content h3 { font-size: 1.5rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid; }
+        .note-content h3:first-child { margin-top: 0; }
+        .note-content h4 { font-size: 1.25rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; }
+        .note-content p, .note-content li { margin-bottom: 0.5rem; line-height: 1.6; }
+        .note-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem;}
+        .note-content strong { font-weight: 600; }
+        .note-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; margin-top: 0.5rem; }
+        .note-content th, .note-content td { border: 1px solid; padding: 0.5rem; text-align: left; }
+        .note-title-button { display: block; width: calc(50% - 0.5rem); padding: 0.75rem 1rem; border-radius: 8px; font-weight: 500; margin: 0.25rem; transition: background-color 0.3s, color 0.3s, border-color 0.3s; text-align: left; border: 1px solid transparent; }
+        @media (max-width: 768px) { 
+            .note-title-button { width: 100%; }
+        }
+        .note-title-button .note-title-main { display: block; font-size: 1rem; font-weight: 600; }
+        .note-title-button .note-title-preview { display: block; font-size: 0.75rem; opacity: 0.8; margin-top: 0.25rem; line-height: 1.2;}
+
+
+        /* Açık (Light) Tema */
+        html.theme-light body { background-color: #f0f4f8; color: #1e293b; }
+        html.theme-light .card-front-bg { background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); }
+        html.theme-light .card-back-bg { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
+        html.theme-light .nav-btn-bg { background-color: #2563eb; }
+        html.theme-light .nav-btn-hover-bg { background-color: #1d4ed8; }
+        html.theme-light .theme-list-item-bg { background-color: white; }
+        html.theme-light .theme-list-item-hover-bg { background-color: #f9fafb; }
+        html.theme-light .header-text-color { color: #2563eb; }
+        html.theme-light .text-muted { color: #4b5563; }
+        html.theme-light .section-card-bg { background-color: white; }
+        html.theme-light .progress-bar-container-bg { background-color: #e5e7eb; }
+        html.theme-light .progress-bar-fill-bg { background-color: #3b82f6; }
+        html.theme-light .test-option-btn-bg { background-color: #e0e7ff; }
+        html.theme-light .test-option-btn-hover-bg { background-color: #c7d2fe; }
+        html.theme-light .test-option-btn-text-color { color: #3730a3; }
+        html.theme-light .test-question-word-clickable { color: #2563eb; }
+        html.theme-light .test-feedback.correct { background-color: #d1fae5; color: #065f46; }
+        html.theme-light .test-feedback.incorrect { background-color: #fee2e2; color: #991b1b; }
+        html.theme-light #themeMenuButton { color: #4b5563; }
+        html.theme-light #themeOptionsMenu { background-color: white; border: 1px solid #e5e7eb; }
+        html.theme-light .theme-option-item { color: #374151; }
+        html.theme-light .theme-option-item:hover { background-color: #f3f4f6; }
+        html.theme-light .theme-option-item.active-item { border-left: 3px solid #3b82f6; padding-left: calc(1rem - 3px); background-color: #eff6ff;}
+        html.theme-light .section-icon-primary { color: #3b82f6; }
+        html.theme-light .section-icon-secondary { color: #10b981; }
+        html.theme-light .section-icon-tertiary { color: #f59e0b; }
+        html.theme-light .flip-button-theme-colors { background-color: #10b981; } 
+        html.theme-light .flip-button-theme-colors:hover { background-color: #059669; }
+        html.theme-light .note-content { background-color: #ffffff; border: 1px solid #e5e7eb; }
+        html.theme-light .note-content h3 { border-bottom-color: #d1d5db; }
+        html.theme-light .note-content th, html.theme-light .note-content td { border-color: #d1d5db; }
+        html.theme-light .note-title-button { background-color: #e9ebee; color: #374151; border-color: #d1d5db; }
+        html.theme-light .note-title-button:hover { background-color: #dfe3e6;}
+        html.theme-light .note-title-button.active-note { background-color: #3b82f6; color: white; border-color: #3b82f6;}
+
+        /* Koyu (Dark) Tema */
+        html.theme-dark body { background-color: #1f2937; color: #d1d5db; }
+        html.theme-dark .card-front-bg { background: linear-gradient(135deg, #374151 0%, #111827 100%); }
+        html.theme-dark .card-back-bg { background: linear-gradient(135deg, #4b5563 0%, #1f2937 100%); }
+        html.theme-dark .nav-btn-bg { background-color: #3b82f6; }
+        html.theme-dark .nav-btn-hover-bg { background-color: #2563eb; }
+        html.theme-dark .theme-list-item-bg { background-color: #374151; }
+        html.theme-dark .theme-list-item-hover-bg { background-color: #4b5563; }
+        html.theme-dark .header-text-color { color: #60a5fa; }
+        html.theme-dark .text-muted { color: #9ca3af; }
+        html.theme-dark .section-card-bg { background-color: #374151; }
+        html.theme-dark .progress-bar-container-bg { background-color: #4b5563; }
+        html.theme-dark .progress-bar-fill-bg { background-color: #60a5fa; }
+        html.theme-dark .test-option-btn-bg { background-color: #312e81; }
+        html.theme-dark .test-option-btn-hover-bg { background-color: #3730a3; }
+        html.theme-dark .test-option-btn-text-color { color: #e0e7ff; }
+        html.theme-dark .test-question-word-clickable { color: #60a5fa; }
+        html.theme-dark .test-feedback.correct { background-color: #064e3b; color: #a7f3d0; }
+        html.theme-dark .test-feedback.incorrect { background-color: #7f1d1d; color: #fecaca; }
+        html.theme-dark #themeMenuButton { color: #9ca3af; }
+        html.theme-dark #themeOptionsMenu { background-color: #1f2937; border: 1px solid #374151;}
+        html.theme-dark .theme-option-item { color: #d1d5db; }
+        html.theme-dark .theme-option-item:hover { background-color: #374151; }
+        html.theme-dark .theme-option-item.active-item { border-left: 3px solid #60a5fa; padding-left: calc(1rem - 3px); background-color: #253041;}
+        html.theme-dark .section-icon-primary { color: #60a5fa; }
+        html.theme-dark .section-icon-secondary { color: #34d399; }
+        html.theme-dark .section-icon-tertiary { color: #fcd34d; }
+        html.theme-dark .flip-button-theme-colors { background-color: #34d399; } 
+        html.theme-dark .flip-button-theme-colors:hover { background-color: #10b981; }
+        html.theme-dark .note-content { background-color: #2d3748; border: 1px solid #4a5568; }
+        html.theme-dark .note-content h3 { border-bottom-color: #4a5568; }
+        html.theme-dark .note-content th, html.theme-dark .note-content td { border-color: #4a5568; }
+        html.theme-dark .note-title-button { background-color: #374151; color: #d1d5db; border-color: #4b5563;}
+        html.theme-dark .note-title-button:hover { background-color: #4b5563;}
+        html.theme-dark .note-title-button.active-note { background-color: #60a5fa; color: #1f2937; border-color: #60a5fa;}
+
+        /* OLED Tema */
+        html.theme-oled body { background-color: #000000; color: #e0e0e0; }
+        html.theme-oled .card-front-bg { background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); }
+        html.theme-oled .card-back-bg { background: linear-gradient(135deg, #2c2c2c 0%, #1f1f1f 100%); }
+        html.theme-oled .nav-btn-bg { background-color: #222222; }
+        html.theme-oled .nav-btn-hover-bg { background-color: #333333; }
+        html.theme-oled .theme-list-item-bg { background-color: #0a0a0a; border: 1px solid #222; }
+        html.theme-oled .theme-list-item-hover-bg { background-color: #1a1a1a; }
+        html.theme-oled .header-text-color { color: #bb86fc; }
+        html.theme-oled .text-muted { color: #757575; }
+        html.theme-oled .section-card-bg { background-color: #0a0a0a; border: 1px solid #222;}
+        html.theme-oled .progress-bar-container-bg { background-color: #222222; }
+        html.theme-oled .progress-bar-fill-bg { background-color: #bb86fc; }
+        html.theme-oled .test-option-btn-bg { background-color: #1e1e1e; }
+        html.theme-oled .test-option-btn-hover-bg { background-color: #2c2c2c; }
+        html.theme-oled .test-option-btn-text-color { color: #e0e0e0; }
+        html.theme-oled .test-question-word-clickable { color: #bb86fc; }
+        html.theme-oled .test-feedback.correct { background-color: #002800; color: #81c784; }
+        html.theme-oled .test-feedback.incorrect { background-color: #280000; color: #e57373; }
+        html.theme-oled #themeMenuButton { color: #757575; }
+        html.theme-oled #themeOptionsMenu { background-color: #0d0d0d; border: 1px solid #222222;}
+        html.theme-oled .theme-option-item { color: #e0e0e0; }
+        html.theme-oled .theme-option-item:hover { background-color: #1a1a1a; }
+        html.theme-oled .theme-option-item.active-item { border-left: 3px solid #bb86fc; padding-left: calc(1rem - 3px); background-color: #1f1f1f;}
+        html.theme-oled .section-icon-primary { color: #bb86fc; }
+        html.theme-oled .section-icon-secondary { color: #03dac6; } 
+        html.theme-oled .section-icon-tertiary { color: #cf6679; }
+        html.theme-oled .flip-button-theme-colors { background-color: #03dac6; }
+        html.theme-oled .flip-button-theme-colors:hover { background-color: #018786; }
+        html.theme-oled .note-content { background-color: #000000; border: 1px solid #222; }
+        html.theme-oled .note-content h3 { border-bottom-color: #222; }
+        html.theme-oled .note-content th, html.theme-oled .note-content td { border-color: #222; }
+        html.theme-oled .note-title-button { background-color: #1e1e1e; color: #e0e0e0; border-color: #333;}
+        html.theme-oled .note-title-button:hover { background-color: #2c2c2c;}
+        html.theme-oled .note-title-button.active-note { background-color: #bb86fc; color: #000000; border-color: #bb86fc;}
+
+        /* Orman (Forest) Teması */
+        html.theme-forest body { background-color: #f0fdf4; color: #166534; } 
+        html.theme-forest .card-front-bg { background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); } 
+        html.theme-forest .card-back-bg { background: linear-gradient(135deg, #86efac 0%, #4ade80 100%); } 
+        html.theme-forest .nav-btn-bg { background-color: #15803d; }
+        html.theme-forest .nav-btn-hover-bg { background-color: #166534; }
+        html.theme-forest .theme-list-item-bg { background-color: #dcfce7; }
+        html.theme-forest .theme-list-item-hover-bg { background-color: #bbf7d0; }
+        html.theme-forest .header-text-color { color: #15803d; }
+        html.theme-forest .text-muted { color: #16a34a; }
+        html.theme-forest .section-card-bg { background-color: #dcfce7; }
+        html.theme-forest .progress-bar-container-bg { background-color: #bbf7d0; }
+        html.theme-forest .progress-bar-fill-bg { background-color: #22c55e; }
+        html.theme-forest .test-option-btn-bg { background-color: #bbf7d0; }
+        html.theme-forest .test-option-btn-hover-bg { background-color: #86efac; }
+        html.theme-forest .test-option-btn-text-color { color: #14532d; }
+        html.theme-forest .test-question-word-clickable { color: #15803d; }
+        html.theme-forest .test-feedback.correct { background-color: #dcfce7; color: #14532d; }
+        html.theme-forest .test-feedback.incorrect { background-color: #fee2e2; color: #991b1b; }
+        html.theme-forest #themeMenuButton { color: #16a34a; }
+        html.theme-forest #themeOptionsMenu { background-color: #f0fdf4; border: 1px solid #bbf7d0;}
+        html.theme-forest .theme-option-item { color: #166534; }
+        html.theme-forest .theme-option-item:hover { background-color: #dcfce7; }
+        html.theme-forest .theme-option-item.active-item { border-left: 3px solid #22c55e; padding-left: calc(1rem - 3px); background-color: #c8f0d1;}
+        html.theme-forest .section-icon-primary { color: #22c55e; }
+        html.theme-forest .section-icon-secondary { color: #84cc16; } 
+        html.theme-forest .section-icon-tertiary { color: #a16207; }
+        html.theme-forest .flip-button-theme-colors { background-color: #84cc16; }
+        html.theme-forest .flip-button-theme-colors:hover { background-color: #65a30d; }
+        html.theme-forest .note-content { background-color: #f0fdf4; border: 1px solid #dcfce7; }
+        html.theme-forest .note-content h3 { border-bottom-color: #bbf7d0; }
+        html.theme-forest .note-content th, html.theme-forest .note-content td { border-color: #bbf7d0; }
+        html.theme-forest .note-title-button { background-color: #dcfce7; color: #14532d; border-color: #bbf7d0;}
+        html.theme-forest .note-title-button:hover { background-color: #bbf7d0;}
+        html.theme-forest .note-title-button.active-note { background-color: #22c55e; color: #f0fdf4; border-color: #22c55e;}
+
+        /* Okyanus (Ocean) Teması */
+        html.theme-ocean body { background-color: #ecfeff; color: #0e7490; } 
+        html.theme-ocean .card-front-bg { background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%); } 
+        html.theme-ocean .card-back-bg { background: linear-gradient(135deg, #67e8f9 0%, #22d3ee 100%); } 
+        html.theme-ocean .nav-btn-bg { background-color: #0891b2; }
+        html.theme-ocean .nav-btn-hover-bg { background-color: #0e7490; }
+        html.theme-ocean .theme-list-item-bg { background-color: #cffafe; }
+        html.theme-ocean .theme-list-item-hover-bg { background-color: #a5f3fc; }
+        html.theme-ocean .header-text-color { color: #0891b2; }
+        html.theme-ocean .text-muted { color: #06b6d4; }
+        html.theme-ocean .section-card-bg { background-color: #cffafe; }
+        html.theme-ocean .progress-bar-container-bg { background-color: #a5f3fc; }
+        html.theme-ocean .progress-bar-fill-bg { background-color: #06b6d4; }
+        html.theme-ocean .test-option-btn-bg { background-color: #a5f3fc; }
+        html.theme-ocean .test-option-btn-hover-bg { background-color: #67e8f9; }
+        html.theme-ocean .test-option-btn-text-color { color: #155e75; }
+        html.theme-ocean .test-question-word-clickable { color: #0891b2; }
+        html.theme-ocean .test-feedback.correct { background-color: #cffafe; color: #164e63; }
+        html.theme-ocean .test-feedback.incorrect { background-color: #ffe4e6; color: #be123c; }
+        html.theme-ocean #themeMenuButton { color: #06b6d4; }
+        html.theme-ocean #themeOptionsMenu { background-color: #ecfeff; border: 1px solid #a5f3fc;}
+        html.theme-ocean .theme-option-item { color: #0e7490; }
+        html.theme-ocean .theme-option-item:hover { background-color: #cffafe; }
+        html.theme-ocean .theme-option-item.active-item { border-left: 3px solid #06b6d4; padding-left: calc(1rem - 3px); background-color: #d6f7fb;}
+        html.theme-ocean .section-icon-primary { color: #06b6d4; }
+        html.theme-ocean .section-icon-secondary { color: #0ea5e9; } 
+        html.theme-ocean .section-icon-tertiary { color: #0369a1; }
+        html.theme-ocean .flip-button-theme-colors { background-color: #0ea5e9; }
+        html.theme-ocean .flip-button-theme-colors:hover { background-color: #0284c7; }
+        html.theme-ocean .note-content { background-color: #ecfeff; border: 1px solid #cffafe; }
+        html.theme-ocean .note-content h3 { border-bottom-color: #a5f3fc; }
+        html.theme-ocean .note-content th, html.theme-ocean .note-content td { border-color: #a5f3fc; }
+        html.theme-ocean .note-title-button { background-color: #cffafe; color: #155e75; border-color: #a5f3fc;}
+        html.theme-ocean .note-title-button:hover { background-color: #a5f3fc;}
+        html.theme-ocean .note-title-button.active-note { background-color: #06b6d4; color: #ecfeff; border-color: #06b6d4;}
+
+        html.theme-pastel body { background-color: #fff7f0; color: #7c5c53; } 
+        html.theme-pastel .card-front-bg { background: linear-gradient(135deg, #ffd8cc 0%, #ffbfa8 100%); } 
+        html.theme-pastel .card-back-bg { background: linear-gradient(135deg, #d4e7c5 0%, #b8d8a0 100%); } 
+        html.theme-pastel .nav-btn-bg { background-color: #bcaaa4; } 
+        html.theme-pastel .nav-btn-hover-bg { background-color: #a1887f; } 
+        html.theme-pastel .theme-list-item-bg { background-color: #fffcf7; }
+        html.theme-pastel .theme-list-item-hover-bg { background-color: #fff5e1; }
+        html.theme-pastel .header-text-color { color: #a1887f; }
+        html.theme-pastel .text-muted { color: #8d6e63; }
+        html.theme-pastel .section-card-bg { background-color: #fffcf7; }
+        html.theme-pastel .progress-bar-container-bg { background-color: #ffe0b2; } 
+        html.theme-pastel .progress-bar-fill-bg { background-color: #ffcc80; } 
+        html.theme-pastel .test-option-btn-bg { background-color: #ffeadd; }
+        html.theme-pastel .test-option-btn-hover-bg { background-color: #ffd8cc; }
+        html.theme-pastel .test-option-btn-text-color { color: #7c5c53; }
+        html.theme-pastel .test-question-word-clickable { color: #81c784; } 
+        html.theme-pastel .test-feedback.correct { background-color: #e6f2dd; color: #558b2f; }
+        html.theme-pastel .test-feedback.incorrect { background-color: #ffebf0; color: #d81b60; } 
+        html.theme-pastel #themeMenuButton { color: #8d6e63; }
+        html.theme-pastel #themeOptionsMenu { background-color: #fff7f0; border: 1px solid #ffeadd;}
+        html.theme-pastel .theme-option-item { color: #7c5c53; }
+        html.theme-pastel .theme-option-item:hover { background-color: #fff0e6; }
+        html.theme-pastel .theme-option-item.active-item { border-left: 3px solid #ffbfa8; padding-left: calc(1rem - 3px); background-color: #ffe6db;}
+        html.theme-pastel .section-icon-primary { color: #ffbfa8; }
+        html.theme-pastel .section-icon-secondary { color: #aed581; }
+        html.theme-pastel .section-icon-tertiary { color: #ce93d8; }
+        html.theme-pastel .flip-button-theme-colors { background-color: #aed581; }
+        html.theme-pastel .flip-button-theme-colors:hover { background-color: #9ccc65; }
+        html.theme-pastel .note-content { background-color: #fff7f0; border: 1px solid #ffeadd; }
+        html.theme-pastel .note-content h3 { border-bottom-color: #ffe0b2; }
+        html.theme-pastel .note-content th, html.theme-pastel .note-content td { border-color: #ffe0b2; }
+        html.theme-pastel .note-title-button { background-color: #ffeadd; color: #7c5c53; border-color: #ffe0b2;}
+        html.theme-pastel .note-title-button:hover { background-color: #ffd8cc;}
+        html.theme-pastel .note-title-button.active-note { background-color: #ffbfa8; color: #7c5c53; border-color: #ffbfa8;}
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <header class="w-full max-w-3xl mb-8 text-center relative">
+        <h1 id="mainHeader" class="text-4xl font-bold header-text-color">Almanca Öğrenme Platformu</h1>
+        <div class="absolute top-0 right-0 p-1">
+            <button id="themeMenuButton" class="p-2 text-2xl rounded-md focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="themeOptionsMenu" class="hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg py-1 z-50">
+                </div>
+        </div>
+    </header>
+
+    <div id="homeView" class="w-full max-w-3xl">
+        <p class="text-lg text-center mb-10 text-muted">Ne yapmak istersin?</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            <div id="goToWordSectionBtn" class="section-card section-card-bg">
+                <i class="fas fa-layer-group section-icon section-icon-primary"></i>
+                <h2 class="text-xl md:text-2xl font-semibold mb-2">Kelime Kartları</h2>
+                <p class="text-sm md:text-base text-muted">Temalara göre kelimeler.</p>
+            </div>
+            <div id="goToTestSectionBtn" class="section-card section-card-bg">
+                <i class="fas fa-vial section-icon section-icon-secondary"></i>
+                <h2 class="text-xl md:text-2xl font-semibold mb-2">Test Modu</h2>
+                <p class="text-sm md:text-base text-muted">Öğrendiklerini sına.</p>
+            </div>
+            <div id="goToNotesSectionBtn" class="section-card section-card-bg col-span-2 md:col-span-1">
+                <i class="fas fa-book-open section-icon section-icon-tertiary"></i>
+                <h2 class="text-xl md:text-2xl font-semibold mb-2">Ders Notları</h2>
+                <p class="text-sm md:text-base text-muted">Konu özetleri ve gramer.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="wordView" class="hidden w-full max-w-xl">
+        <div id="wordThemeSelectionView">
+            <button id="backToHomeFromWordsBtn" class="nav-btn nav-btn-bg hover:nav-btn-hover-bg mb-6">
+                <i class="fas fa-arrow-left mr-2"></i>Ana Sayfaya Dön
+            </button>
+            <h2 class="text-2xl font-semibold mb-6 text-center">Bir Tema Seç</h2>
+            <div id="themeListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            <div id="noThemesMessage" class="no-content-message text-center hidden text-muted">
+                Gösterilecek tema bulunmamaktadır.
+            </div>
+        </div>
+        <div id="wordCardDisplayView" class="hidden">
+            <button id="backToThemesBtn" class="nav-btn nav-btn-bg hover:nav-btn-hover-bg mb-6">
+                <i class="fas fa-arrow-left mr-2"></i>Temalara Dön
+            </button>
+            <div class="flip-card" id="flipCard">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front card-front-bg">
+                        <div id="germanWord" class="word"></div>
+                        <div id="exampleSentence" class="example-sentence"></div>
+                        <button id="pronunciationBtn" class="pronunciation-btn">
+                            <i class="fas fa-volume-up mr-2"></i>Telaffuz Et
+                        </button>
+                    </div>
+                    <div class="flip-card-back card-back-bg">
+                        <div id="turkishWord" class="translation"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="progress-info" class="text-center text-sm text-muted mb-2"></div>
+            <div id="progressBarContainer" class="progress-bar-container progress-bar-container-bg">
+                <div id="progressBar" class="progress-bar progress-bar-fill-bg"></div>
+            </div>
+            <div class="navigation-controls mt-6 flex justify-center items-center">
+                <button id="prevBtn" class="nav-btn"><i class="fas fa-arrow-left mr-2"></i>Önceki</button>
+                <button id="flipBtn" class="nav-btn flip-button-theme-colors mx-4"><i class="fas fa-sync-alt mr-2"></i>Çevir</button>
+                <button id="nextBtn" class="nav-btn">Sonraki<i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+            <div id="noWordsMessage" class="no-content-message text-center hidden text-muted">
+                Bu temada gösterilecek kelime bulunmamaktadır.
+            </div>
+        </div>
+    </div>
+
+    <div id="testView" class="hidden w-full max-w-xl">
+        <button id="backToHomeFromTestBtn" class="nav-btn nav-btn-bg hover:nav-btn-hover-bg mb-6">
+            <i class="fas fa-arrow-left mr-2"></i>Ana Sayfaya Dön
+        </button>
+        <h2 class="text-3xl font-semibold mb-4 text-center">Test Modu</h2>
+        <div id="testContent" class="section-card-bg p-6 rounded-lg shadow-md">
+            <div id="testQuestionContainer" class="mb-6">
+                <p class="text-lg mb-1 text-muted">Soru <span id="currentQuestionNumber">1</span> / <span id="totalTestQuestions">10</span></p>
+                <p id="testQuestion" class="text-xl font-semibold mb-4"></p>
+                <div id="testOptionsContainer"></div>
+            </div>
+            <div id="testFeedback" class="test-feedback hidden"></div>
+            <button id="nextTestQuestionBtn" class="nav-btn nav-btn-bg hover:nav-btn-hover-bg mt-6 w-full hidden">Sonraki Soru</button>
+        </div>
+        <div id="testResultsView" class="hidden section-card-bg p-6 rounded-lg shadow-md mt-6 text-center">
+            <h3 class="text-2xl font-semibold mb-4">Test Tamamlandı!</h3>
+            <p class="text-xl">Skorunuz: <span id="testScore" class="font-bold"></span></p>
+            <button id="restartTestBtn" class="nav-btn nav-btn-bg hover:nav-btn-hover-bg mt-6">Testi Yeniden Başlat</button>
+        </div>
+         <div id="noTestWordsMessage" class="no-content-message text-center hidden text-muted mt-6">
+            Test için yeterli kelime bulunmamaktadır. Lütfen daha fazla kelime ekleyin.
+        </div>
+    </div>
+
+    <div id="notesView" class="hidden w-full max-w-3xl"> <button id="backToHomeFromNotesBtn" class="nav-btn nav-btn-bg hover:nav-btn-hover-bg mb-6">
+            <i class="fas fa-arrow-left mr-2"></i>Ana Sayfaya Dön
+        </button>
+        <h2 class="text-3xl font-semibold mb-4 text-center header-text-color">Ders Notları</h2>
+        <div id="noteSelectionContainer" class="flex flex-col md:flex-row flex-wrap justify-center mb-4">
+            </div>
+        <div id="noteDisplayArea" class="note-content section-card-bg">
+            <p class="text-muted text-center">Görüntülemek için bir not başlığı seçin.</p>
+        </div>
+    </div>
+
+    <footer class="mt-12 text-center text-sm text-muted">
+        <p>&copy; 2024 Almanca Öğrenme Platformu. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        const allWords = [
+            // Mevcut Kelimeler (Selamlaşma, Günlük İfadeler vb.)
+            { german: "Hallo", turkish: "Merhaba", theme: "Selamlaşma", example: "Hallo, wie geht es dir?", pronunciation: "Hallo", article: "" },
+            { german: "Guten Morgen", turkish: "Günaydın", theme: "Selamlaşma", example: "Guten Morgen, Herr Müller!", pronunciation: "Guten Morgen", article: "" },
+            { german: "Guten Tag", turkish: "İyi günler", theme: "Selamlaşma", example: "Guten Tag, Frau Schmidt.", pronunciation: "Guten Taag", article: "" },
+            { german: "Guten Abend", turkish: "İyi akşamlar", theme: "Selamlaşma", example: "Guten Abend, meine Damen und Herren.", pronunciation: "Guten Aabent", article: "" },
+            { german: "Auf Wiedersehen", turkish: "Hoşça kal (Resmi)", theme: "Selamlaşma", example: "Auf Wiedersehen, bis bald!", pronunciation: "Auf Viderzeen", article: "" },
+            { german: "Tschüss", turkish: "Hoşça kal (Samimi)", theme: "Selamlaşma", example: "Tschüss, bis morgen!", pronunciation: "Çüs", article: "" },
+            { german: "Danke", turkish: "Teşekkür ederim", theme: "Günlük İfadeler", example: "Danke für deine Hilfe.", pronunciation: "Danke", article: "" },
+            { german: "Bitte", turkish: "Lütfen / Rica ederim", theme: "Günlük İfadeler", example: "Kannst du mir bitte helfen?", pronunciation: "Bitte", article: "" },
+            { german: "Entschuldigung", turkish: "Özür dilerim / Affedersiniz", theme: "Günlük İfadeler", example: "Entschuldigung, können Sie das wiederholen?", pronunciation: "Entşuldigung", article: "" },
+            { german: "Wie geht es Ihnen?", turkish: "Nasılsınız? (Resmi)", theme: "Günlük İfadeler", example: "Hallo, wie geht es Ihnen?", pronunciation: "Vii geet es İinen", article: "" },
+            { german: "Wie geht es dir?", turkish: "Nasılsın? (Samimi)", theme: "Günlük İfadeler", example: "Hallo Max, wie geht es dir?", pronunciation: "Vii geet es diir", article: "" },
+            { german: "Ja", turkish: "Evet", theme: "Temel Cevaplar", example: "Ja, das ist richtig.", pronunciation: "Ya", article: "" },
+            { german: "Nein", turkish: "Hayır", theme: "Temel Cevaplar", example: "Nein, das möchte ich nicht.", pronunciation: "Nayn", article: "" },
+            { german: "Vielleicht", turkish: "Belki", theme: "Temel Cevaplar", example: "Vielleicht komme ich später.", pronunciation: "Fiilayht", article: "" },
+            { german: "Der Apfel", turkish: "Elma", theme: "Yiyecekler", example: "Der Apfel ist rot.", pronunciation: "Der Apfel", article: "Der" },
+            { german: "Die Banane", turkish: "Muz", theme: "Yiyecekler", example: "Ich esse gerne Bananen.", pronunciation: "Di Banaane", article: "Die" },
+            { german: "Das Brot", turkish: "Ekmek", theme: "Yiyecekler", example: "Ich kaufe Brot.", pronunciation: "Das Brot", article: "Das" },
+            { german: "Der Käse", turkish: "Peynir", theme: "Yiyecekler", example: "Magst du Käse?", pronunciation: "Der Keeze", article: "Der" },
+            { german: "Die Milch", turkish: "Süt", theme: "Yiyecekler", example: "Ich trinke gerne Milch.", pronunciation: "Di Milh", article: "Die" },
+            { german: "Das Ei", turkish: "Yumurta", theme: "Yiyecekler", example: "Ein gekochtes Ei zum Frühstück.", pronunciation: "Das Ay", article: "Das" },
+            { german: "Das Wasser", turkish: "Su", theme: "İçecekler", example: "Ein Glas Wasser, bitte.", pronunciation: "Das Vassa", article: "Das" },
+            { german: "Der Tee", turkish: "Çay", theme: "İçecekler", example: "Ich trinke Tee.", pronunciation: "Der Tee", article: "Der" },
+            { german: "Der Kaffee", turkish: "Kahve", theme: "İçecekler", example: "Möchtest du einen Kaffee?", pronunciation: "Der Kaffee", article: "Der" },
+            { german: "Der Saft", turkish: "Meyve suyu", theme: "İçecekler", example: "Orangensaft ist lecker.", pronunciation: "Der Zaft", article: "Der" },
+            { german: "Das Rot", turkish: "Kırmızı (renk)", theme: "Renkler", example: "Das Rot des Sonnenuntergangs.", pronunciation: "Das Rot", article: "Das" },
+            { german: "Das Blau", turkish: "Mavi (renk)", theme: "Renkler", example: "Das Blau des Himmels.", pronunciation: "Das Blau", article: "Das" },
+            { german: "Das Grün", turkish: "Yeşil (renk)", theme: "Renkler", example: "Das Grün der Wiesen.", pronunciation: "Das Grün", article: "Das" },
+            { german: "Das Gelb", turkish: "Sarı (renk)", theme: "Renkler", example: "Das Gelb der Zitrone.", pronunciation: "Das Gelp", article: "Das" },
+            { german: "Das Schwarz", turkish: "Siyah (renk)", theme: "Renkler", example: "Das Schwarz der Nacht.", pronunciation: "Das Şvarts", article: "Das" },
+            { german: "Das Weiß", turkish: "Beyaz (renk)", theme: "Renkler", example: "Das Weiß des Schnees.", pronunciation: "Das Vays", article: "Das" },
+            { german: "Das Grau", turkish: "Gri (renk)", theme: "Renkler", example: "Das Grau der Wolken.", pronunciation: "Das Grau", article: "Das" },
+            { german: "Das Braun", turkish: "Kahverengi (renk)", theme: "Renkler", example: "Das Braun der Erde.", pronunciation: "Das Braun", article: "Das" },
+            { german: "Eins", turkish: "Bir", theme: "Sayılar (1-10)", example: "Ich habe einen Hund.", pronunciation: "Ayns", article: "" },
+            { german: "Zwei", turkish: "İki", theme: "Sayılar (1-10)", example: "Zwei Äpfel, bitte.", pronunciation: "Tsvay", article: "" },
+            { german: "Drei", turkish: "Üç", theme: "Sayılar (1-10)", example: "Er hat drei Kinder.", pronunciation: "Dray", article: "" },
+            { german: "Vier", turkish: "Dört", theme: "Sayılar (1-10)", example: "Es ist vier Uhr.", pronunciation: "Fiir", article: "" },
+            { german: "Fünf", turkish: "Beş", theme: "Sayılar (1-10)", example: "Fünf Finger.", pronunciation: "Fünf", article: "" },
+            { german: "Sechs", turkish: "Altı", theme: "Sayılar (1-10)", example: "Sechs Stühle.", pronunciation: "Zeks", article: "" },
+            { german: "Sieben", turkish: "Yedi", theme: "Sayılar (1-10)", example: "Sieben Tage hat die Woche.", pronunciation: "Ziiben", article: "" },
+            { german: "Acht", turkish: "Sekiz", theme: "Sayılar (1-10)", example: "Achtung!", pronunciation: "Aht", article: "" },
+            { german: "Neun", turkish: "Dokuz", theme: "Sayılar (1-10)", example: "Neun Planeten (früher).", pronunciation: "Noyn", article: "" },
+            { german: "Zehn", turkish: "On", theme: "Sayılar (1-10)", example: "Zehn Euro.", pronunciation: "Tseen", article: "" },
+            { german: "Die Familie", turkish: "Aile", theme: "Aile Bireyleri", example: "Meine Familie ist groß.", pronunciation: "Di Familye", article: "Die" },
+            { german: "Der Vater", turkish: "Baba", theme: "Aile Bireyleri", example: "Mein Vater ist Arzt.", pronunciation: "Der Faater", article: "Der" },
+            { german: "Die Mutter", turkish: "Anne", theme: "Aile Bireyleri", example: "Meine Mutter kocht gut.", pronunciation: "Di Mutter", article: "Die" },
+            { german: "Der Sohn", turkish: "Erkek evlat", theme: "Aile Bireyleri", example: "Mein Sohn spielt Fußball.", pronunciation: "Der Zoon", article: "Der" },
+            { german: "Die Tochter", turkish: "Kız evlat", theme: "Aile Bireyleri", example: "Meine Tochter lernt Klavier.", pronunciation: "Di Tohter", article: "Die" },
+            { german: "Der Bruder", turkish: "Erkek kardeş", theme: "Aile Bireyleri", example: "Ich habe einen Bruder.", pronunciation: "Der Bruuder", article: "Der" },
+            { german: "Die Schwester", turkish: "Kız kardeş", theme: "Aile Bireyleri", example: "Meine Schwester lernt Deutsch.", pronunciation: "Di Şvester", article: "Die" },
+            { german: "Der Großvater", turkish: "Büyükbaba", theme: "Aile Bireyleri", example: "Mein Großvater ist alt.", pronunciation: "Der Groosfaater", article: "Der" },
+            { german: "Die Großmutter", turkish: "Büyükanne", theme: "Aile Bireyleri", example: "Meine Großmutter backt Kuchen.", pronunciation: "Di Groosmutter", article: "Die" },
+            { german: "Der Hund", turkish: "Köpek", theme: "Hayvanlar", example: "Der Hund bellt.", pronunciation: "Der Hunt", article: "Der" },
+            { german: "Die Katze", turkish: "Kedi", theme: "Hayvanlar", example: "Die Katze schläft.", pronunciation: "Di Katse", article: "Die" },
+            { german: "Der Vogel", turkish: "Kuş", theme: "Hayvanlar", example: "Der Vogel singt.", pronunciation: "Der Foogel", article: "Der" },
+            { german: "Das Pferd", turkish: "At", theme: "Hayvanlar", example: "Das Pferd ist schnell.", pronunciation: "Das Pfert", article: "Das" },
+            { german: "Die Maus", turkish: "Fare", theme: "Hayvanlar", example: "Die Maus isst Käse.", pronunciation: "Di Maus", article: "Die" },
+            { german: "Der Fisch", turkish: "Balık", theme: "Hayvanlar", example: "Der Fisch schwimmt im Wasser.", pronunciation: "Der Fiş", article: "Der" },
+            { german: "groß", turkish: "büyük", theme: "Sıfatlar", example: "Das Haus ist groß.", pronunciation: "groos", article: "" },
+            { german: "klein", turkish: "küçük", theme: "Sıfatlar", example: "Die Maus ist klein.", pronunciation: "klayn", article: "" },
+            { german: "gut", turkish: "iyi", theme: "Sıfatlar", example: "Das Essen ist gut.", pronunciation: "guut", article: "" },
+            { german: "schlecht", turkish: "kötü", theme: "Sıfatlar", example: "Das Wetter ist schlecht.", pronunciation: "şleht", article: "" },
+            { german: "schön", turkish: "güzel", theme: "Sıfatlar", example: "Die Blume ist schön.", pronunciation: "şöön", article: "" },
+            { german: "neu", turkish: "yeni", theme: "Sıfatlar", example: "Mein Auto ist neu.", pronunciation: "noy", article: "" },
+            { german: "alt", turkish: "eski / yaşlı", theme: "Sıfatlar", example: "Das Buch ist alt.", pronunciation: "alt", article: "" },
+            { german: "sein", turkish: "olmak", theme: "Fiiller", example: "Ich bin müde.", pronunciation: "zayn", article: "" },
+            { german: "haben", turkish: "sahip olmak", theme: "Fiiller", example: "Ich habe Hunger.", pronunciation: "haaben", article: "" },
+            { german: "gehen", turkish: "gitmek", theme: "Fiiller", example: "Ich gehe nach Hause.", pronunciation: "geeyen", article: "" },
+            { german: "kommen", turkish: "gelmek", theme: "Fiiller", example: "Er kommt später.", pronunciation: "kommen", article: "" },
+            { german: "sehen", turkish: "görmek", theme: "Fiiller", example: "Ich sehe einen Vogel.", pronunciation: "zeeyen", article: "" },
+            { german: "sprechen", turkish: "konuşmak", theme: "Fiiller", example: "Wir sprechen Deutsch.", pronunciation: "şprehen", article: "" },
+            { german: "essen", turkish: "yemek yemek", theme: "Fiiller", example: "Ich esse Pizza.", pronunciation: "essen", article: "" },
+            { german: "trinken", turkish: "içmek", theme: "Fiiller", example: "Er trinkt Wasser.", pronunciation: "trinken", article: "" },
+            { german: "Der Lehrer", turkish: "Öğretmen (erkek)", theme: "Meslekler", example: "Der Lehrer unterrichtet Mathe.", pronunciation: "Der Leerer", article: "Der" },
+            { german: "Die Lehrerin", turkish: "Öğretmen (kadın)", theme: "Meslekler", example: "Die Lehrerin ist nett.", pronunciation: "Di Leererin", article: "Die" },
+            { german: "Der Arzt", turkish: "Doktor (erkek)", theme: "Meslekler", example: "Der Arzt hilft Kranken.", pronunciation: "Der Artst", article: "Der" },
+            { german: "Die Ärztin", turkish: "Doktor (kadın)", theme: "Meslekler", example: "Die Ärztin arbeitet im Krankenhaus.", pronunciation: "Di Ertstin", article: "Die" },
+            { german: "Der Polizist", turkish: "Polis (erkek)", theme: "Meslekler", example: "Der Polizist regelt den Verkehr.", pronunciation: "Der Politsist", article: "Der" },
+            { german: "Der Koch", turkish: "Aşçı (erkek)", theme: "Meslekler", example: "Der Koch kocht Suppe.", pronunciation: "Der Koh", article: "Der" },
+            { german: "Das Auto", turkish: "Araba", theme: "Ulaşım Araçları", example: "Ich fahre mit dem Auto.", pronunciation: "Das Auto", article: "Das" },
+            { german: "Der Bus", turkish: "Otobüs", theme: "Ulaşım Araçları", example: "Der Bus kommt gleich.", pronunciation: "Der Bus", article: "Der" },
+            { german: "Der Zug", turkish: "Tren", theme: "Ulaşım Araçları", example: "Der Zug fährt nach Berlin.", pronunciation: "Der Tsuuk", article: "Der" },
+            { german: "Das Fahrrad", turkish: "Bisiklet", theme: "Ulaşım Araçları", example: "Ich fahre gerne Fahrrad.", pronunciation: "Das Faarraat", article: "Das" },
+            { german: "Das Flugzeug", turkish: "Uçak", theme: "Ulaşım Araçları", example: "Das Flugzeug fliegt hoch.", pronunciation: "Das Fluuktsoyk", article: "Das" },
+            { german: "Der Kopf", turkish: "Kafa", theme: "Vücudun Bölümleri", example: "Mein Kopf tut weh.", pronunciation: "Der Kopf", article: "Der" },
+            { german: "Das Auge", turkish: "Göz", theme: "Vücudun Bölümleri", example: "Ich habe blaue Augen.", pronunciation: "Das Auge", article: "Das" },
+            { german: "Die Nase", turkish: "Burun", theme: "Vücudun Bölümleri", example: "Die Nase ist zum Riechen da.", pronunciation: "Di Naaze", article: "Die" },
+            { german: "Der Mund", turkish: "Ağız", theme: "Vücudun Bölümleri", example: "Öffne den Mund.", pronunciation: "Der Munt", article: "Der" },
+            { german: "Das Ohr", turkish: "Kulak", theme: "Vücudun Bölümleri", example: "Ich höre mit den Ohren.", pronunciation: "Das Oor", article: "Das" },
+            { german: "Die Hand", turkish: "El", theme: "Vücudun Bölümleri", example: "Gib mir deine Hand.", pronunciation: "Di Hant", article: "Die" },
+            { german: "Der Fuß", turkish: "Ayak", theme: "Vücudun Bölümleri", example: "Mein Fuß ist eingeschlafen.", pronunciation: "Der Fuus", article: "Der" },
+            
+            // TELC Kelimeleri (Önceki 70 + Yeni 100 = 170)
+            // TELC A1.2
+            { german: "Die Ampel", turkish: "trafik lambası", theme: "TELC Kelimeleri", pronunciation: "Di Ampel", example: "Die Ampel ist rot.", article: "Die" },
+            { german: "Die Ankunftszeit", turkish: "varış saati", theme: "TELC Kelimeleri", pronunciation: "Di Ankunfts-tsayt", example: "Was ist die Ankunftszeit?", article: "Die" },
+            { german: "Die Apotheke", turkish: "eczane", theme: "TELC Kelimeleri", pronunciation: "Di Apoteeke", example: "Ich gehe zur Apotheke.", article: "Die" },
+            { german: "Der Bahnhof", turkish: "tren istasyonu", theme: "TELC Kelimeleri", pronunciation: "Der Baanhof", example: "Der Zug fährt vom Bahnhof ab.", article: "Der" },
+            { german: "Bezahlen", turkish: "ödemek", theme: "TELC Kelimeleri", pronunciation: "Betsaalen", example: "Kann ich bitte bezahlen?", article: "" },
+            { german: "Die Bushaltestelle", turkish: "otobüs durağı", theme: "TELC Kelimeleri", pronunciation: "Di Bushalte-ştele", example: "Die nächste Bushaltestelle ist dort.", article: "Die" },
+            { german: "Die Einzelfahrkarte", turkish: "tek yön bilet", theme: "TELC Kelimeleri", pronunciation: "Di Ayntsel-faarkarte", example: "Ich brauche eine Einzelfahrkarte.", article: "Die" },
+            { german: "Der Erwachsene", turkish: "yetişkin", theme: "TELC Kelimeleri", pronunciation: "Der Ervaksene", example: "Der Eintritt für Erwachsene ist 5 Euro.", article: "Der" },
+            { german: "Der Fahrgast", turkish: "yolcu", theme: "TELC Kelimeleri", pronunciation: "Der Faargast", example: "Die Fahrgäste steigen ein.", article: "Der" },
+            { german: "Das Gleis", turkish: "peron", theme: "TELC Kelimeleri", pronunciation: "Das Glays", example: "Der Zug fährt von Gleis 3.", article: "Das" },
+            { german: "Das Krankenhaus", turkish: "hastane", theme: "TELC Kelimeleri", pronunciation: "Das Kranken-haus", example: "Er ist im Krankenhaus.", article: "Das" },
+            { german: "Links", turkish: "sol", theme: "TELC Kelimeleri", pronunciation: "Links", example: "Biegen Sie links ab.", article: "" },
+            { german: "Rechts", turkish: "sağ", theme: "TELC Kelimeleri", pronunciation: "Rehts", example: "Die Apotheke ist rechts.", article: "" },
+            { german: "Umsteigen", turkish: "aktarma yapmak", theme: "TELC Kelimeleri", pronunciation: "Um-ştaygen", example: "Ich muss in Köln umsteigen.", article: "" },
+            { german: "Warten", turkish: "beklemek", theme: "TELC Kelimeleri", pronunciation: "Varten", example: "Ich warte auf den Bus.", article: "" },
+            { german: "Der Stadtplan", turkish: "şehir haritası", theme: "TELC Kelimeleri", pronunciation: "Der Ştat-plaan", example: "Hast du einen Stadtplan?", article: "Der" },
+            { german: "Die Ausbildung", turkish: "meslek eğitimi", theme: "TELC Kelimeleri", pronunciation: "Di Aus-bildung", example: "Er macht eine Ausbildung.", article: "Die" },
+            { german: "Der Beruf", turkish: "meslek", theme: "TELC Kelimeleri", pronunciation: "Der Beruuf", example: "Was ist Ihr Beruf?", article: "Der" },
+            { german: "Die Werkstatt", turkish: "atelye, tamirhane", theme: "TELC Kelimeleri", pronunciation: "Di Verk-ştat", example: "Das Auto ist in der Werkstatt.", article: "Die" },
+            { german: "Das Fieber", turkish: "ateş", theme: "TELC Kelimeleri", pronunciation: "Das Fiiber", example: "Ich habe Fieber.", article: "Das" },
+            { german: "Der Hals", turkish: "boğaz", theme: "TELC Kelimeleri", pronunciation: "Der Hals", example: "Mein Hals tut weh.", article: "Der" },
+            { german: "Das Medikament", turkish: "İlaç", theme: "TELC Kelimeleri", pronunciation: "Das Medikament", example: "Nehmen Sie dieses Medikament.", article: "Das" },
+            { german: "Der Schmerz", turkish: "ağrı", theme: "TELC Kelimeleri", pronunciation: "Der Şmerts", example: "Ich habe Schmerzen.", article: "Der" },
+            { german: "Der Zahn", turkish: "diş", theme: "TELC Kelimeleri", pronunciation: "Der Tsaan", example: "Mein Zahn tut weh.", article: "Der" },
+            { german: "Die Blume", turkish: "çiçek", theme: "TELC Kelimeleri", pronunciation: "Di Bluume", example: "Die Blume ist schön.", article: "Die" },
+            { german: "Das Hobby", turkish: "hobi", theme: "TELC Kelimeleri", pronunciation: "Das Hobi", example: "Mein Hobby ist Lesen.", article: "Das" },
+            { german: "Die Reise", turkish: "yolculuk", theme: "TELC Kelimeleri", pronunciation: "Di Rayze", example: "Gute Reise!", article: "Die" },
+            { german: "Der Strand", turkish: "sahil", theme: "TELC Kelimeleri", pronunciation: "Der Ştrant", example: "Wir gehen an den Strand.", article: "Der" },
+            { german: "Der Anzug", turkish: "takım elbise", theme: "TELC Kelimeleri", pronunciation: "Der An-tsuuk", example: "Er trägt einen Anzug.", article: "Der" },
+            { german: "Die Bluse", turkish: "bluz", theme: "TELC Kelimeleri", pronunciation: "Di Bluze", example: "Die Bluse ist weiß.", article: "Die" },
+            { german: "Das Hemd", turkish: "gömlek", theme: "TELC Kelimeleri", pronunciation: "Das Hemt", example: "Das Hemd ist blau.", article: "Das" },
+            { german: "Die Hose", turkish: "pantolon", theme: "TELC Kelimeleri", pronunciation: "Di Hoze", example: "Die Hose ist neu.", article: "Die" },
+            { german: "Die Jacke", turkish: "ceket", theme: "TELC Kelimeleri", pronunciation: "Di Yake", example: "Zieh deine Jacke an.", article: "Die" },
+            { german: "Das Kleid", turkish: "elbise", theme: "TELC Kelimeleri", pronunciation: "Das Klayt", example: "Das Kleid ist schön.", article: "Das" },
+            { german: "Der Pullover", turkish: "kazak", theme: "TELC Kelimeleri", pronunciation: "Der Pulover", example: "Der Pullover ist warm.", article: "Der" },
+            { german: "Der Schuh", turkish: "ayakkabı", theme: "TELC Kelimeleri", pronunciation: "Der Şu", example: "Meine Schuhe sind bequem.", article: "Der" },
+            { german: "Das T-Shirt", turkish: "tişört", theme: "TELC Kelimeleri", pronunciation: "Das Tii-şört", example: "Ich trage ein T-Shirt.", article: "Das" },
+            { german: "Der Baum", turkish: "ağaç", theme: "TELC Kelimeleri", pronunciation: "Der Baum", example: "Der Baum ist groß.", article: "Der" },
+            { german: "Das Geschenk", turkish: "armağan", theme: "TELC Kelimeleri", pronunciation: "Das Geşenk", example: "Das ist ein Geschenk für dich.", article: "Das" },
+            { german: "Die Hochzeit", turkish: "düğün", theme: "TELC Kelimeleri", pronunciation: "Di Hohtsayt", example: "Wir gehen zur Hochzeit.", article: "Die" },
+            { german: "Der Chef", turkish: "şef (erkek)", theme: "TELC Kelimeleri", pronunciation: "Der Şef", example: "Der Chef ist heute nicht da.", article: "Der"},
+            { german: "Die Chefin", turkish: "şef (kadın)", theme: "TELC Kelimeleri", pronunciation: "Di Şefin", example: "Die Chefin hat angerufen.", article: "Die"},
+            { german: "Der Kollege", turkish: "meslektaş (erkek)", theme: "TELC Kelimeleri", pronunciation: "Der Kolege", example: "Mein Kollege ist krank.", article: "Der"},
+            { german: "Die Kollegin", turkish: "meslektaş (kadın)", theme: "TELC Kelimeleri", pronunciation: "Di Kolegin", example: "Meine Kollegin hilft mir.", article: "Die"},
+            { german: "Pünktlich", turkish: "dakik", theme: "TELC Kelimeleri", pronunciation: "Pünktlih", example: "Sei bitte pünktlich!", article: ""},
+            { german: "Der Termin", turkish: "randevu", theme: "TELC Kelimeleri", pronunciation: "Der Termiin", example: "Ich habe einen Termin.", article: "Der"},
+            { german: "Die Unterschrift", turkish: "imza", theme: "TELC Kelimeleri", pronunciation: "Di Unterşrift", example: "Hier fehlt Ihre Unterschrift.", article: "Die"},
+            { german: "Die Minute", turkish: "dakika", theme: "TELC Kelimeleri", pronunciation: "Di Minuute", example: "Warte eine Minute.", article: "Die"},
+            { german: "Der Parkplatz", turkish: "otopark", theme: "TELC Kelimeleri", pronunciation: "Der Parkplats", example: "Wo ist ein Parkplatz?", article: "Der"},
+            { german: "Die Polizei", turkish: "polis", theme: "TELC Kelimeleri", pronunciation: "Di Polit-say", example: "Rufen Sie die Polizei!", article: "Die"},
+            { german: "Das Restaurant", turkish: "restoran", theme: "TELC Kelimeleri", pronunciation: "Das Restoran", example: "Das Restaurant ist gut.", article: "Das"},
+            { german: "Die Straßenbahn", turkish: "tramvay", theme: "TELC Kelimeleri", pronunciation: "Di Ştraasenbaan", example: "Ich nehme die Straßenbahn.", article: "Die"},
+            { german: "Der Winter", turkish: "kış", theme: "TELC Kelimeleri", pronunciation: "Der Vinter", example: "Im Winter ist es kalt.", article: "Der"},
+            { german: "Der Sommer", turkish: "yaz", theme: "TELC Kelimeleri", pronunciation: "Der Zomer", example: "Im Sommer ist es warm.", article: "Der"},
+            { german: "Der Frühling", turkish: "ilkbahar", theme: "TELC Kelimeleri", pronunciation: "Der Frühling", example: "Der Frühling ist schön.", article: "Der"},
+            { german: "Der Herbst", turkish: "sonbahar", theme: "TELC Kelimeleri", pronunciation: "Der Herbst", example: "Im Herbst fallen die Blätter.", article: "Der"},
+            { german: "Die Ansage", turkish: "duyuru, anons", theme: "TELC Kelimeleri", pronunciation: "Di Anzaage", example: "Hören Sie die Ansage.", article: "Die" },
+            { german: "Die Auskunft", turkish: "bilgi, danışma", theme: "TELC Kelimeleri", pronunciation: "Di Auskunft", example: "Ich brauche eine Auskunft.", article: "Die" },
+            { german: "Außerdem", turkish: "ayrıca, bunun dışında", theme: "TELC Kelimeleri", pronunciation: "Auserdem", example: "Außerdem möchte ich einen Kaffee.", article: "" },
+            { german: "Der Ball", turkish: "top", theme: "TELC Kelimeleri", pronunciation: "Der Bal", example: "Wir spielen mit dem Ball.", article: "Der" },
+            { german: "Die Bank", turkish: "banka; bank (oturak)", theme: "TELC Kelimeleri", pronunciation: "Di Bank", example: "Ich gehe zur Bank. / Setz dich auf die Bank.", article: "Die" },
+            { german: "Dafür", turkish: "onun için, bu yüzden", theme: "TELC Kelimeleri", pronunciation: "Dafüür", example: "Ich habe keine Zeit dafür.", article: "" },
+            { german: "Einfach", turkish: "basit, kolay; sadece", theme: "TELC Kelimeleri", pronunciation: "Aynfah", example: "Das ist einfach. / Ich möchte einfach Wasser.", article: "" },
+            { german: "Fahren", turkish: "gitmek (araçla), sürmek", theme: "TELC Kelimeleri", pronunciation: "Faaren", example: "Ich fahre mit dem Auto.", article: "" },
+            { german: "Fast", turkish: "neredeyse, hemen hemen", theme: "TELC Kelimeleri", pronunciation: "Fast", example: "Ich bin fast fertig.", article: "" },
+            { german: "Das Gebäude", turkish: "bina", theme: "TELC Kelimeleri", pronunciation: "Das Geboyde", example: "Das Gebäude ist alt.", article: "Das" },
+            { german: "Geben", turkish: "vermek", theme: "TELC Kelimeleri", pronunciation: "Geeben", example: "Kannst du mir das geben?", article: "" },
+            { german: "Gegenüber", turkish: "karşısında", theme: "TELC Kelimeleri", pronunciation: "Gegen-über", example: "Die Post ist gegenüber der Bank.", article: "" },
+            { german: "Geradeaus", turkish: "dümdüz, doğruca", theme: "TELC Kelimeleri", pronunciation: "Gerade-aus", example: "Gehen Sie immer geradeaus.", article: "" },
+            { german: "Gültig", turkish: "geçerli", theme: "TELC Kelimeleri", pronunciation: "Gültih", example: "Die Fahrkarte ist gültig.", article: "" },
+            { german: "Halten", turkish: "durmak; tutmak", theme: "TELC Kelimeleri", pronunciation: "Halten", example: "Der Bus hält hier. / Halt meine Tasche.", article: "" },
+            { german: "Hinter", turkish: "arkasında", theme: "TELC Kelimeleri", pronunciation: "Hinter", example: "Das Auto steht hinter dem Haus.", article: "" },
+            { german: "Das Hotel", turkish: "otel", theme: "TELC Kelimeleri", pronunciation: "Das Hotel", example: "Wir übernachten im Hotel.", article: "Das" },
+            { german: "Der Informationsschalter", turkish: "danışma bankosu", theme: "TELC Kelimeleri", pronunciation: "Der Informatsiyons-şalter", example: "Fragen Sie am Informationsschalter.", article: "Der" },
+            { german: "Das Kino", turkish: "sinema", theme: "TELC Kelimeleri", pronunciation: "Das Kiino", example: "Wir gehen ins Kino.", article: "Das" },
+            { german: "Die Kirche", turkish: "kilise", theme: "TELC Kelimeleri", pronunciation: "Di Kirhe", example: "Die Kirche ist sehr alt.", article: "Die" },
+            { german: "Die Kreuzung", turkish: "kavşak", theme: "TELC Kelimeleri", pronunciation: "Di Kroytsung", example: "An der nächsten Kreuzung rechts.", article: "Die" },
+            { german: "Die Linie", turkish: "hat (otobüs, metro)", theme: "TELC Kelimeleri", pronunciation: "Di Liinye", example: "Welche Linie fährt zum Zentrum?", article: "Die" },
+            { german: "Der Meter", turkish: "metre", theme: "TELC Kelimeleri", pronunciation: "Der Meeter", example: "Das ist einen Meter lang.", article: "Der" },
+            { german: "Nachfragen", turkish: "sormak, bilgi almak", theme: "TELC Kelimeleri", pronunciation: "Naah-fragen", example: "Ich muss mal nachfragen.", article: "" },
+            { german: "Nichts", turkish: "hiçbir şey", theme: "TELC Kelimeleri", pronunciation: "Nihts", example: "Ich habe nichts gesehen.", article: "" },
+            { german: "Öffentlich", turkish: "kamu, umumi, halka açık", theme: "TELC Kelimeleri", pronunciation: "Öfentlih", example: "Das ist ein öffentlicher Park.", article: "" },
+            { german: "Die Orientierung", turkish: "yön bulma, oryantasyon", theme: "TELC Kelimeleri", pronunciation: "Di Orientierung", example: "Ich habe keine Orientierung.", article: "Die" },
+            { german: "Der Park", turkish: "park", theme: "TELC Kelimeleri", pronunciation: "Der Park", example: "Wir gehen in den Park.", article: "Der" },
+            { german: "Praktisch", turkish: "pratik, kullanışlı", theme: "TELC Kelimeleri", pronunciation: "Praktiş", example: "Das ist sehr praktisch.", article: "" },
+            { german: "Das Rathaus", turkish: "belediye binası", theme: "TELC Kelimeleri", pronunciation: "Das Raat-haus", example: "Das Rathaus ist im Zentrum.", article: "Das" },
+            { german: "Selten", turkish: "nadiren, seyrek", theme: "TELC Kelimeleri", pronunciation: "Zelten", example: "Ich gehe selten ins Kino.", article: "" },
+            { german: "Sowieso", turkish: "zaten, her halükarda", theme: "TELC Kelimeleri", pronunciation: "Zovizo", example: "Ich komme sowieso.", article: "" },
+            { german: "Später", turkish: "daha sonra", theme: "TELC Kelimeleri", pronunciation: "Şpeeter", example: "Wir sehen uns später.", article: "" },
+            { german: "Steigen", turkish: "binmek (araca); tırmanmak; yükselmek", theme: "TELC Kelimeleri", pronunciation: "Ştaygen", example: "Ich steige in den Bus. / Die Preise steigen.", article: "" },
+            { german: "Die Tageskarte", turkish: "günlük bilet", theme: "TELC Kelimeleri", pronunciation: "Di Taageskarte", example: "Eine Tageskarte, bitte.", article: "Die" },
+            { german: "Das Taxi", turkish: "taksi", theme: "TELC Kelimeleri", pronunciation: "Das Taksi", example: "Nehmen wir ein Taxi?", article: "Das" },
+            { german: "Überall", turkish: "her yerde", theme: "TELC Kelimeleri", pronunciation: "Über-al", example: "Ich habe überall gesucht.", article: "" },
+            { german: "Ungefähr", turkish: "yaklaşık, takriben", theme: "TELC Kelimeleri", pronunciation: "Ungefehr", example: "Das dauert ungefähr eine Stunde.", article: "" },
+            { german: "Unter", turkish: "altında", theme: "TELC Kelimeleri", pronunciation: "Unter", example: "Der Ball ist unter dem Tisch.", article: "" },
+            { german: "Verstanden", turkish: "anlaşıldı", theme: "TELC Kelimeleri", pronunciation: "Ferştanden", example: "Haben Sie verstanden? Ja, verstanden.", article: "" },
+            { german: "Voll", turkish: "dolu", theme: "TELC Kelimeleri", pronunciation: "Fol", example: "Das Glas ist voll.", article: "" },
+            { german: "Vorbei", turkish: "geçmiş; yanından", theme: "TELC Kelimeleri", pronunciation: "Forbay", example: "Der Bus ist schon vorbei. / Gehen Sie am Kino vorbei.", article: "" },
+            { german: "Vorne", turkish: "önde", theme: "TELC Kelimeleri", pronunciation: "Forne", example: "Bitte vorne einsteigen.", article: "" },
+            { german: "Der Weg", turkish: "yol", theme: "TELC Kelimeleri", pronunciation: "Der Veek", example: "Das ist der falsche Weg.", article: "Der" },
+            { german: "Wohin", turkish: "nereye", theme: "TELC Kelimeleri", pronunciation: "Vo-hin", example: "Wohin gehst du?", article: "" },
+            { german: "Wollen", turkish: "istemek", theme: "TELC Kelimeleri", pronunciation: "Vollen", example: "Ich will schlafen.", article: "" },
+            { german: "Der Zug", turkish: "tren", theme: "TELC Kelimeleri", pronunciation: "Der Tsuuk", example: "Der Zug kommt an.", article: "Der" },
+            { german: "Zweimal", turkish: "iki kez", theme: "TELC Kelimeleri", pronunciation: "Tsvay-maal", example: "Ich war zweimal dort.", article: "" },
+            { german: "Zwischen", turkish: "arasında", theme: "TELC Kelimeleri", pronunciation: "Tsvişen", example: "Der Stuhl steht zwischen Tisch und Schrank.", article: "" },
+            { german: "Anfangen", turkish: "başlamak", theme: "TELC Kelimeleri", pronunciation: "An-fangen", example: "Der Film fängt um 20 Uhr an.", article: "" },
+            { german: "Der Arbeitstag", turkish: "iş günü", theme: "TELC Kelimeleri", pronunciation: "Der Arbaytstaag", example: "Mein Arbeitstag ist lang.", article: "Der" },
+            { german: "Ausfüllen", turkish: "doldurmak (form vb.)", theme: "TELC Kelimeleri", pronunciation: "Aus-füllen", example: "Füllen Sie das Formular aus.", article: "" },
+            { german: "Die Aushilfe", turkish: "geçici yardımcı, ek personel", theme: "TELC Kelimeleri", pronunciation: "Di Aus-hilfe", example: "Wir suchen eine Aushilfe.", article: "Die" },
+            { german: "Der Automechaniker", turkish: "otomobil tamircisi", theme: "TELC Kelimeleri", pronunciation: "Der Auto-mehaniker", example: "Der Automechaniker repariert das Auto.", article: "Der" },
+            { german: "Backen", turkish: "fırında pişirmek (kek, ekmek)", theme: "TELC Kelimeleri", pronunciation: "Baken", example: "Ich backe einen Kuchen.", article: "" },
+            { german: "Der Bäcker", turkish: "fırıncı", theme: "TELC Kelimeleri", pronunciation: "Der Beker", example: "Der Bäcker macht Brot.", article: "Der" },
+            { german: "Bald", turkish: "yakında", theme: "TELC Kelimeleri", pronunciation: "Balt", example: "Bis bald!", article: "" },
+            { german: "Berichten", turkish: "bildirmek, rapor etmek", theme: "TELC Kelimeleri", pronunciation: "Berihten", example: "Er berichtet über das Wetter.", article: "" },
+            { german: "Beruflich", turkish: "mesleki, işle ilgili", theme: "TELC Kelimeleri", pronunciation: "Beruuflih", example: "Was machen Sie beruflich?", article: "" },
+            { german: "Die Bürokauffrau", turkish: "büro memuresi", theme: "TELC Kelimeleri", pronunciation: "Di Büro-kauffrau", example: "Sie ist Bürokauffrau.", article: "Die" },
+            { german: "Das Computerprogramm", turkish: "bilgisayar programı", theme: "TELC Kelimeleri", pronunciation: "Das Komputer-program", example: "Das ist ein neues Computerprogramm.", article: "Das" },
+            { german: "Dauern", turkish: "sürmek (zaman)", theme: "TELC Kelimeleri", pronunciation: "Dauern", example: "Wie lange dauert der Film?", article: "" },
+            { german: "Der Feierabend", turkish: "iş çıkışı, paydos", theme: "TELC Kelimeleri", pronunciation: "Der Fayer-aabent", example: "Ich mache jetzt Feierabend.", article: "Der" },
+            { german: "Flexibel", turkish: "esnek", theme: "TELC Kelimeleri", pronunciation: "Fleksibel", example: "Die Arbeitszeiten sind flexibel.", article: "" },
+            { german: "Fotografieren", turkish: "fotoğraf çekmek", theme: "TELC Kelimeleri", pronunciation: "Fotografieren", example: "Ich fotografiere gern.", article: "" },
+            { german: "Freundlich", turkish: "arkadaş canlısı, nazik", theme: "TELC Kelimeleri", pronunciation: "Froyntlih", example: "Er ist sehr freundlich.", article: "" },
+            { german: "Der Führerschein", turkish: "ehliyet", theme: "TELC Kelimeleri", pronunciation: "Der Füürer-şayn", example: "Hast du einen Führerschein?", article: "Der" },
+            { german: "Halbtags", turkish: "yarım gün", theme: "TELC Kelimeleri", pronunciation: "Halp-taags", example: "Sie arbeitet halbtags.", article: "" },
+            { german: "Die Hausfrau", turkish: "ev hanımı", theme: "TELC Kelimeleri", pronunciation: "Di Haus-frau", example: "Sie ist Hausfrau.", article: "Die" },
+            { german: "Installieren", turkish: "kurmak, monte etmek", theme: "TELC Kelimeleri", pronunciation: "Installieren", example: "Ich installiere die Software.", article: "" },
+            { german: "Die Kantine", turkish: "kantin, yemekhane", theme: "TELC Kelimeleri", pronunciation: "Di Kantiine", example: "Wir essen in der Kantine.", article: "Die" },
+            { german: "Kaputt", turkish: "bozuk, kırık", theme: "TELC Kelimeleri", pronunciation: "Kaput", example: "Mein Handy ist kaputt.", article: "" },
+            { german: "Die Kasse", turkish: "kasa (market vb.)", theme: "TELC Kelimeleri", pronunciation: "Di Kasse", example: "Bitte an der Kasse bezahlen.", article: "Die" },
+            { german: "Der Kassierer", turkish: "kasiyer (erkek)", theme: "TELC Kelimeleri", pronunciation: "Der Kasiirer", example: "Der Kassierer ist freundlich.", article: "Der" },
+            { german: "Klingeln", turkish: "zil çalmak", theme: "TELC Kelimeleri", pronunciation: "Klingeln", example: "Das Telefon klingelt.", article: "" },
+            { german: "Korrigieren", turkish: "düzeltmek", theme: "TELC Kelimeleri", pronunciation: "Korrigieren", example: "Bitte korrigieren Sie den Fehler.", article: "" },
+            { german: "Kreativ", turkish: "yaratıcı", theme: "TELC Kelimeleri", pronunciation: "Kreatiif", example: "Sie ist sehr kreativ.", article: "" },
+            { german: "Langweilig", turkish: "sıkıcı", theme: "TELC Kelimeleri", pronunciation: "Lang-vaylih", example: "Der Film war langweilig.", article: "" },
+            { german: "Das Ausland", turkish: "yurt dışı", theme: "TELC Kelimeleri", pronunciation: "Das Ausland", example: "Er arbeitet im Ausland.", article: "Das"},
+            { german: "Die Beratung", turkish: "danışmanlık, tavsiye", theme: "TELC Kelimeleri", pronunciation: "Di Beraatung", example: "Ich brauche eine Beratung.", article: "Die"},
+            { german: "Der Bereich", turkish: "alan, saha, bölüm", theme: "TELC Kelimeleri", pronunciation: "Der Berayh", example: "In welchem Bereich arbeiten Sie?", article: "Der"},
+            { german: "Die Fitness", turkish: "fitness, formda olma", theme: "TELC Kelimeleri", pronunciation: "Di Fitnes", example: "Ich gehe ins Fitnessstudio.", article: "Die"},
+            { german: "Die Kenntnisse", turkish: "bilgi, beceri (çoğul)", theme: "TELC Kelimeleri", pronunciation: "Di Kentnisse", example: "Er hat gute Deutschkenntnisse.", article: "Die"},
+            { german: "Die Kommunikation", turkish: "iletişim", theme: "TELC Kelimeleri", pronunciation: "Di Komunikatsiyoon", example: "Gute Kommunikation ist wichtig.", article: "Die"},
+            { german: "Der Lebenslauf", turkish: "özgeçmiş, CV", theme: "TELC Kelimeleri", pronunciation: "Der Leebenslauf", example: "Schicken Sie mir Ihren Lebenslauf.", article: "Der"},
+            { german: "Persönlich", turkish: "kişisel, şahsen", theme: "TELC Kelimeleri", pronunciation: "Perzöönlih", example: "Das ist meine persönliche Meinung.", article: ""},
+            { german: "Professionell", turkish: "profesyonel", theme: "TELC Kelimeleri", pronunciation: "Profesyonel", example: "Sie arbeitet sehr professionell.", article: ""},
+            { german: "Die Stelle", turkish: "yer, pozisyon, iş", theme: "TELC Kelimeleri", pronunciation: "Di Ştele", example: "Ich suche eine neue Stelle.", article: "Die"},
+            { german: "Sympathisch", turkish: "sempatik, cana yakın", theme: "TELC Kelimeleri", pronunciation: "Zümpatiş", example: "Er ist sehr sympathisch.", article: ""},
+            { german: "Die Teilzeit", turkish: "kısmi zamanlı çalışma", theme: "TELC Kelimeleri", pronunciation: "Di Tayltsayt", example: "Sie arbeitet in Teilzeit.", article: "Die"},
+            { german: "Die Vollzeit", turkish: "tam zamanlı çalışma", theme: "TELC Kelimeleri", pronunciation: "Di Foltsayt", example: "Er hat eine Vollzeitstelle.", article: "Die"},
+            { german: "Die Voraussetzung", turkish: "ön koşul, şart", theme: "TELC Kelimeleri", pronunciation: "Di Forauszetsung", example: "Das ist eine wichtige Voraussetzung.", article: "Die"},
+            { german: "Zuverlässig", turkish: "güvenilir", theme: "TELC Kelimeleri", pronunciation: "Tsuferlessig", example: "Er ist ein zuverlässiger Mitarbeiter.", article: ""},
+            { german: "Abholen", turkish: "gidip almak, karşılamak", theme: "TELC Kelimeleri", pronunciation: "Ap-hoolen", example: "Ich hole dich vom Bahnhof ab.", article: "" },
+            { german: "Anklicken", turkish: "tıklamak (fareyle)", theme: "TELC Kelimeleri", pronunciation: "An-klicken", example: "Klicken Sie den Link an.", article: "" },
+            { german: "Der Benutzername", turkish: "kullanıcı adı", theme: "TELC Kelimeleri", pronunciation: "Der Benutsername", example: "Wie ist dein Benutzername?", article: "Der"},
+            { german: "Bestellen", turkish: "sipariş etmek", theme: "TELC Kelimeleri", pronunciation: "Beştellen", example: "Ich möchte eine Pizza bestellen.", article: ""},
+            { german: "Chatten", turkish: "sohbet etmek (internette)", theme: "TELC Kelimeleri", pronunciation: "Çeten", example: "Wir chatten oft.", article: ""},
+            { german: "Drucken", turkish: "yazdırmak (print)", theme: "TELC Kelimeleri", pronunciation: "Druken", example: "Kannst du das bitte drucken?", article: ""},
+            { german: "Empfehlen", turkish: "tavsiye etmek", theme: "TELC Kelimeleri", pronunciation: "Empfeelen", example: "Was können Sie empfehlen?", article: ""},
+            { german: "Das Forum", turkish: "forum", theme: "TELC Kelimeleri", pronunciation: "Das Forum", example: "Ich lese im Forum.", article: "Das"},
+            { german: "Funktionieren", turkish: "işlemek, çalışmak", theme: "TELC Kelimeleri", pronunciation: "Funktsiyonieren", example: "Der Drucker funktioniert nicht.", article: ""},
+            { german: "Das Internet", turkish: "internet", theme: "TELC Kelimeleri", pronunciation: "Das Internet", example: "Ich surfe im Internet.", article: "Das"},
+            { german: "Der Kommentar", turkish: "yorum", theme: "TELC Kelimeleri", pronunciation: "Der Komentar", example: "Schreib einen Kommentar.", article: "Der"},
+            { german: "Kostenlos", turkish: "ücretsiz", theme: "TELC Kelimeleri", pronunciation: "Kostenloos", example: "Der Eintritt ist kostenlos.", article: ""},
+            { german: "Reservieren", turkish: "rezervasyon yapmak", theme: "TELC Kelimeleri", pronunciation: "Rezervieren", example: "Ich möchte einen Tisch reservieren.", article: ""},
+            { german: "Das Smartphone", turkish: "akıllı telefon", theme: "TELC Kelimeleri", pronunciation: "Das Smartfon", example: "Mein Smartphone ist neu.", article: "Das"},
+            { german: "Die Temperatur", turkish: "sıcaklık", theme: "TELC Kelimeleri", pronunciation: "Di Temperatur", example: "Die Temperatur steigt.", article: "Die"},
+            { german: "Der Automat", turkish: "otomat", theme: "TELC Kelimeleri", pronunciation: "Der Automat", example: "Der Fahrkartenautomat ist kaputt.", article: "Der"},
+            { german: "Buchen", turkish: "rezervasyon yapmak (seyahat, otel)", theme: "TELC Kelimeleri", pronunciation: "Buuhen", example: "Ich buche einen Flug.", article: ""},
+            { german: "Defekt", turkish: "arızalı, bozuk", theme: "TELC Kelimeleri", pronunciation: "Defekt", example: "Das Gerät ist defekt.", article: ""},
+            { german: "Der Fahrplan", turkish: "tarife, sefer çizelgesi", theme: "TELC Kelimeleri", pronunciation: "Der Faarplaan", example: "Wo ist der Fahrplan?", article: "Der"},
+            { german: "Die Verspätung", turkish: "rötar, gecikme", theme: "TELC Kelimeleri", pronunciation: "Di Fer-şpeetung", example: "Der Zug hat Verspätung.", article: "Die" },
+            { german: "Die Einbauküche", turkish: "ankastre mutfak", theme: "TELC Kelimeleri", pronunciation: "Di Aynbauküğhe", example: "Die Wohnung hat eine Einbauküche.", article: "Die"},
+            { german: "Einrichten", turkish: "döşemek, kurmak", theme: "TELC Kelimeleri", pronunciation: "Aynrihten", example: "Wir richten die Wohnung ein.", article: ""},
+            { german: "Die Hausverwaltung", turkish: "bina yönetimi", theme: "TELC Kelimeleri", pronunciation: "Di Hausfervaltung", example: "Die Hausverwaltung ist zuständig.", article: "Die"},
+            { german: "Kündigen", turkish: "feshetmek, istifa etmek", theme: "TELC Kelimeleri", pronunciation: "Kündigen", example: "Ich möchte meinen Vertrag kündigen.", article: ""},
+            { german: "Der Makler", turkish: "emlakçı", theme: "TELC Kelimeleri", pronunciation: "Der Maakler", example: "Der Makler zeigt uns die Wohnung.", article: "Der"},
+            { german: "Der Umzug", turkish: "taşınma", theme: "TELC Kelimeleri", pronunciation: "Der Umtsuuk", example: "Der Umzug ist nächste Woche.", article: "Der"},
+            { german: "Das Amt", turkish: "resmi daire, makam", theme: "TELC Kelimeleri", pronunciation: "Das Amt", example: "Ich gehe zum Amt.", article: "Das"},
+            { german: "Der Antrag", turkish: "başvuru, dilekçe", theme: "TELC Kelimeleri", pronunciation: "Der Antraak", example: "Füllen Sie den Antrag aus.", article: "Der"},
+            { german: "Die Arbeitserlaubnis", turkish: "çalışma izni", theme: "TELC Kelimeleri", pronunciation: "Di Arbayts-erlaubnis", example: "Er braucht eine Arbeitserlaubnis.", article: "Die"},
+            { german: "Die Geburtsurkunde", turkish: "doğum belgesi", theme: "TELC Kelimeleri", pronunciation: "Di Gebuurts-urkunde", example: "Bringen Sie Ihre Geburtsurkunde mit.", article: "Die"},
+            { german: "Die Staatsangehörigkeit", turkish: "vatandaşlık, milliyet", theme: "TELC Kelimeleri", pronunciation: "Di Ştaats-angehörigkayt", example: "Welche Staatsangehörigkeit haben Sie?", article: "Die"},
+            { german: "Das Abitur", turkish: "lise diploması (Alman sistemi)", theme: "TELC Kelimeleri", pronunciation: "Das Abitur", example: "Er hat sein Abitur gemacht.", article: "Das"},
+            { german: "Der Abschluss", turkish: "mezuniyet, bitirme", theme: "TELC Kelimeleri", pronunciation: "Der Apşlus", example: "Herzlichen Glückwunsch zum Abschluss!", article: "Der"},
+            { german: "Die Berufsschule", turkish: "meslek okulu", theme: "TELC Kelimeleri", pronunciation: "Di Beruufsşule", example: "Er geht zur Berufsschule.", article: "Die"},
+            { german: "Die Prüfung", turkish: "sınav", theme: "TELC Kelimeleri", pronunciation: "Di Prüfung", example: "Die Prüfung war schwer.", article: "Die"},
+            { german: "Das Zertifikat", turkish: "sertifika", theme: "TELC Kelimeleri", pronunciation: "Das Tsertifikat", example: "Hier ist Ihr Zertifikat.", article: "Das"},
+            { german: "Die Abteilung", turkish: "bölüm, departman", theme: "TELC Kelimeleri", pronunciation: "Di Ap-taylung", example: "Er arbeitet in der Marketing-Abteilung.", article: "Die" },
+            { german: "Der Arbeitsvertrag", turkish: "iş sözleşmesi", theme: "TELC Kelimeleri", pronunciation: "Der Arbayts-fertraak", example: "Ich habe den Arbeitsvertrag unterschrieben.", article: "Der" },
+            { german: "Der Bildschirm", turkish: "ekran", theme: "TELC Kelimeleri", pronunciation: "Der Bilt-şirm", example: "Der Bildschirm ist groß.", article: "Der" },
+            { german: "Der Brand", turkish: "yangın", theme: "TELC Kelimeleri", pronunciation: "Der Brant", example: "Im Brandfall rufen Sie die Feuerwehr.", article: "Der" },
+            { german: "Die Versicherung", turkish: "sigorta", theme: "TELC Kelimeleri", pronunciation: "Di Ferziherung", example: "Haben Sie eine Versicherung?", article: "Die" },
+            { german: "Die Behandlung", turkish: "tedavi, muamele", theme: "TELC Kelimeleri", pronunciation: "Di Behandlung", example: "Die Behandlung dauert eine Woche.", article: "Die" },
+            { german: "Die Entspannung", turkish: "gevşeme, dinlenme", theme: "TELC Kelimeleri", pronunciation: "Di Ent-şpannung", example: "Ich brauche Entspannung.", article: "Die" },
+            { german: "Die Rechnung", turkish: "fatura", theme: "TELC Kelimeleri", pronunciation: "Di Rehnung", example: "Die Rechnung, bitte.", article: "Die" },
+            { german: "Der Ausflug", turkish: "gezi", theme: "TELC Kelimeleri", pronunciation: "Der Aus-fluuk", example: "Wir machen einen Ausflug.", article: "Der" },
+            { german: "Die Leidenschaft", turkish: "tutku", theme: "TELC Kelimeleri", pronunciation: "Di Laydenşaft", example: "Musik ist meine Leidenschaft.", article: "Die" },
+            { german: "Der Notfall", turkish: "acil durum", theme: "TELC Kelimeleri", pronunciation: "Der Not-fal", example: "Im Notfall 112 anrufen.", article: "Der"},
+            { german: "Das Protokoll", turkish: "protokol, tutanak", theme: "TELC Kelimeleri", pronunciation: "Das Protokol", example: "Wer schreibt das Protokoll?", article: "Das"},
+            { german: "Die Regel", turkish: "kural", theme: "TELC Kelimeleri", pronunciation: "Di Regel", example: "Das sind die Regeln.", article: "Die"},
+            { german: "Die Sicherheit", turkish: "güvenlik", theme: "TELC Kelimeleri", pronunciation: "Di Ziherhayt", example: "Sicherheit ist wichtig.", article: "Die"},
+            { german: "Unterstützen", turkish: "desteklemek", theme: "TELC Kelimeleri", pronunciation: "Unter-ştütsen", example: "Wir unterstützen dich.", article: ""},
+            { german: "Verboten", turkish: "yasak", theme: "TELC Kelimeleri", pronunciation: "Ferboten", example: "Rauchen ist hier verboten.", article: ""},
+            { german: "Der Vortrag", turkish: "sunum, konferans", theme: "TELC Kelimeleri", pronunciation: "Der Foortraag", example: "Der Vortrag war interessant.", article: "Der"},
+            { german: "Die Gymnastik", turkish: "jimnastik", theme: "TELC Kelimeleri", pronunciation: "Di Gümnastik", example: "Sie macht Gymnastik.", article: "Die"},
+            { german: "Das Hausmittel", turkish: "ev ilacı, halk ilacı", theme: "TELC Kelimeleri", pronunciation: "Das Hausmittel", example: "Tee ist ein gutes Hausmittel.", article: "Das"},
+            { german: "Die Kostenübernahme", turkish: "masraf karşılama", theme: "TELC Kelimeleri", pronunciation: "Di Kosten-übernaame", example: "Die Krankenkasse prüft die Kostenübernahme.", article: "Die"},
+            { german: "Die Nebenwirkung", turkish: "yan etki", theme: "TELC Kelimeleri", pronunciation: "Di Neebenwirkung", example: "Hat das Medikament Nebenwirkungen?", article: "Die"},
+            { german: "Der Sportverein", turkish: "spor kulübü", theme: "TELC Kelimeleri", pronunciation: "Der Şport-ferayn", example: "Er ist Mitglied im Sportverein.", article: "Der"},
+            { german: "Die Überweisung", turkish: "havale (banka); sevk (doktor)", theme: "TELC Kelimeleri", pronunciation: "Di Übervayzung", example: "Ich brauche eine Überweisung zum Facharzt.", article: "Die"},
+            { german: "Der Bankschalter", turkish: "banka gişesi", theme: "TELC Kelimeleri", pronunciation: "Der Bank-şalter", example: "Gehen Sie zum Bankschalter.", article: "Der"},
+            { german: "Das Bargeld", turkish: "nakit para", theme: "TELC Kelimeleri", pronunciation: "Das Baargelt", example: "Ich zahle mit Bargeld.", article: "Das"},
+            { german: "Die Gebühr", turkish: "ücret, harç", theme: "TELC Kelimeleri", pronunciation: "Di Gebüür", example: "Die Gebühr beträgt 10 Euro.", article: "Die"},
+            { german: "Der Kontoauszug", turkish: "hesap ekstresi", theme: "TELC Kelimeleri", pronunciation: "Der Konto-austsuuk", example: "Ich drucke den Kontoauszug.", article: "Der"},
+            { german: "Die Münze", turkish: "madeni para", theme: "TELC Kelimeleri", pronunciation: "Di Müntse", example: "Hast du eine Münze?", article: "Die"},
+            { german: "Der Schein", turkish: "banknot; belge", theme: "TELC Kelimeleri", pronunciation: "Der Şayn", example: "Ich habe einen 50-Euro-Schein.", article: "Der"},
+            { german: "Der Appetit", turkish: "iştah", theme: "TELC Kelimeleri", pronunciation: "Der Apetit", example: "Guten Appetit!", article: "Der"},
+            { german: "Der Gegensatz", turkish: "zıtlık, karşıtlık", theme: "TELC Kelimeleri", pronunciation: "Der Gegenzats", example: "Im Gegensatz zu dir mag ich das.", article: "Der"},
+            { german: "Das Geschirr", turkish: "bulaşık, sofra takımı", theme: "TELC Kelimeleri", pronunciation: "Das Geşir", example: "Das Geschirr ist schmutzig.", article: "Das" },
+            { german: "Der Grill", turkish: "ızgara, mangal", theme: "TELC Kelimeleri", pronunciation: "Der Gril", example: "Wir machen heute Abend Grill.", article: "Der"},
+            { german: "Konzentrieren sich", turkish: "konsantre olmak", theme: "TELC Kelimeleri", pronunciation: "Konzentriiren zih", example: "Konzentrier dich!", article: ""},
+            { german: "Malen", turkish: "resim yapmak, boyamak", theme: "TELC Kelimeleri", pronunciation: "Maalen", example: "Kinder malen gern.", article: ""},
+            { german: "Die Umfrage", turkish: "anket", theme: "TELC Kelimeleri", pronunciation: "Di Umfraage", example: "Nehmen Sie an der Umfrage teil.", article: "Die"}
+        ];
+
+        const notesData = [
+            {
+                title: "A1 Ders Notları",
+                id: "a1-notes",
+                preview: "Alfabe, Şahıs Zamirleri, Fiil Çekimi (Haben/Sein), Sayılar, W-Fragen, Selamlaşma, Tanışma, Artikeller (Nominativ), Olumsuzluk (Nicht/Kein), Modal Fiiller, Saatler, Zaman Edatları, Ayrılabilen Fiiller, Perfekt, Sıra Sayıları.",
+                content: `
+                    <h3>Almanca Alfabe ve Bazı Telaffuz Kuralları</h3>
+                    <p>Almancada 26 standart harf, 3 Umlaut (ä, ö, ü) ve Es-tset (ß) bulunur. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <ul>
+                        <li><strong>ie:</strong> uzun 'i' sesi verir (Örn: sieben - ziibın) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>ei:</strong> 'ay' sesi verir (Örn: Eins - ayns) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>eu:</strong> 'oy' sesi verir (Örn: Euro - oyro) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>s (kelime başında sesli harften önce):</strong> 'z' gibi okunur (Örn: Sieben - ziibın) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>z:</strong> 'ts' gibi okunur (Örn: Zwei - tsvay) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>v:</strong> genellikle 'f' gibi okunur (Örn: vier - fiir) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>w:</strong> 'v' gibi okunur (Örn: Zwei - tsvay) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>sch:</strong> 'ş' sesi verir (Örn: Schule - şuulı) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>tsch:</strong> 'ç' sesi verir (Örn: Tschüs - çüs) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>-tion:</strong> '-tsiyon' olarak okunur (Örn: Aktion) [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                    </ul>
+
+                    <h3>Şahıs Zamirleri (Personalpronomen)</h3>
+                    <p>ich (ben), du (sen), er (o - eril), sie (o - dişil), es (o - nötr), wir (biz), ihr (siz), sie (onlar), Sie (Siz - resmi/kibar) [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+
+                    <h3>Fiil Çekimi (Verbkonjugation - Präsens)</h3>
+                    <p>Düzenli fiiller şahıslara göre şu ekleri alır: [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <ul>
+                        <li>ich: -e (mache)</li>
+                        <li>du: -st (machst)</li>
+                        <li>er/sie/es: -t (macht)</li>
+                        <li>wir: -en (machen)</li>
+                        <li>ihr: -t (macht)</li>
+                        <li>sie/Sie: -en (machen)</li>
+                    </ul>
+                    <p><strong>haben (sahip olmak) - Düzensiz:</strong> ich habe, du hast, er/sie/es hat, wir haben, ihr habt, sie/Sie haben [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p><strong>sein (olmak) - Düzensiz:</strong> ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie/Sie sind [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+
+                    <h3>Artikeller (Nominativ - Yalın Hal)</h3>
+                    <p><strong>Belirli Artikeller:</strong> Der (eril), Die (dişil), Das (nötr), Die (çoğul) [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p><strong>Belirsiz Artikeller:</strong> Ein (eril - der), Eine (dişil - die), Ein (nötr - das). Çoğulda belirsiz artikel yoktur. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+
+                    <h3>Olumsuzluk (Nicht / Kein)</h3>
+                    <p><strong>Nicht:</strong> Fiilleri, sıfatları, zarfları ve bazen tüm cümleyi olumsuz yapar. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p><strong>Kein/Keine:</strong> İsimleri olumsuz yapar. İsmin artikelinin belirsiz formuna 'k' eklenerek oluşturulur. Eril (der) ve nötr (das) isimler için 'kein', dişil (die) ve çoğul (die) isimler için 'keine' kullanılır (Nominativ'de). [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Örn: Ich habe <strong>kein</strong> Auto (das). Ich habe <strong>keine</strong> Katze (die).</p>
+
+                    <h3>Possessivartikel (İyelik Artikelleri - Nominativ)</h3>
+                    <p>Benim (mein), senin (dein). Eril ve nötr isimlerle 'mein/dein', dişil ve çoğul isimlerle 'meine/deine' kullanılır. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Onun (er/es için): sein/seine; Onun (sie için): ihr/ihre. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+
+                    <h3>Akkusativ (İsmin -i Hali)</h3>
+                    <p>Belirli artikellerde sadece 'der' -> 'den' olur. Diğerleri (die, das, die Plural) aynı kalır. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Belirsiz artikellerde sadece eril 'ein' -> 'einen' olur. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Olumsuz artikellerde sadece eril 'kein' -> 'keinen' olur. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Akkusativ gerektiren bazı fiiller: haben, sehen, kaufen, essen, trinken, suchen, finden, brauchen, besuchen, fragen, lernen, lieben. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Akkusativ gerektiren bazı edatlar: für, ohne, gegen, um, durch, bis, entlang. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+
+                    <h3>Dativ (İsmin -e Hali)</h3>
+                    <p>Belirli Artikeller: der -> dem, die -> der, das -> dem, die (Plural) -> den (+ isme -n). [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Dativ gerektiren bazı fiiller: helfen, danken, gehören, gefallen, antworten, schmecken. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p>Dativ gerektiren bazı edatlar: mit, zu, bei, aus, von, seit, nach (zamansal). [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    
+                    <h3>Modalverben (Tarz Fiilleri)</h3>
+                    <p>Cümlede asıl fiil mastar halde en sona gider.</p>
+                    <ul>
+                        <li><strong>können (yapabilmek):</strong> Ich kann schwimmen. [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>wollen (istemek - güçlü istek):</strong> Ich will schlafen. [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>möchten (istemek - nazik istek, mögen'in Konj. II hali):</strong> Ich möchte einen Kaffee. [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>müssen (zorunda olmak):</strong> Ich muss arbeiten. [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>sollen (-meli, -malı - görev, tavsiye):</strong> Du sollst lernen. [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                        <li><strong>dürfen (izinli olmak):</strong> Ich darf hier parken. [cite: A1.1 21 NisanGrubum9_1.pdf]</li>
+                    </ul>
+
+                    <h3>Saatler (Die Uhrzeit)</h3>
+                    <p><strong>Resmi:</strong> Saat + Uhr + Dakika (Örn: 10:20 -> zehn Uhr zwanzig) [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    <p><strong>Gayriresmi:</strong> Dakika + nach (geçe) / vor (kala) + Saat (Örn: 10:20 -> zwanzig nach zehn; 10:40 -> zwanzig vor elf). Buçuk: halb + sonraki saat (Örn: 10:30 -> halb elf). Çeyrek: Viertel. [cite: A1.1 21 NisanGrubum9_1.pdf]</p>
+                    
+                    <h3>Perfekt (Di'li Geçmiş Zaman)</h3>
+                    <p>Yardımcı fiil (haben veya sein) özneye göre çekimlenir ve cümlenin ikinci pozisyonunda yer alır. Asıl fiilin Partizip II (3. hali) cümlenin en sonuna gider. [cite: A1.1 21 NisanGrubum9_1.pdf, A2 GRUP NOTLARI 3.pdf]</p>
+                    <p><strong>Haben ile:</strong> Çoğu fiil. Örn: Ich habe gelernt. (Öğrendim) [cite: A1.1 21 NisanGrubum9_1.pdf, A2 GRUP NOTLARI 3.pdf]</p>
+                    <p><strong>Sein ile:</strong> Hareket (gitmek, gelmek, uçmak) veya durum değişikliği (olmak, kalmak, büyümek) bildiren fiiller. Örn: Ich bin gegangen. (Gittim) [cite: A1.1 21 NisanGrubum9_1.pdf, A2 GRUP NOTLARI 3.pdf]</p>
+                    <p><strong>Partizip II Oluşturma:</strong></p>
+                    <ul>
+                        <li>Düzenli fiiller: ge + fiil kökü + t (Örn: machen -> gemacht) [cite: A1.1 21 NisanGrubum9_1.pdf, A2 GRUP NOTLARI 3.pdf]</li>
+                        <li>Düzensiz fiiller: Genellikle ge + kök değişimi + en (Örn: sehen -> gesehen, schreiben -> geschrieben) [cite: A1.1 21 NisanGrubum9_1.pdf, A2 GRUP NOTLARI 3.pdf]</li>
+                        <li>Ayrılabilen fiiller: Ön ek + ge + fiil kökü + t/en (Örn: anrufen -> angerufen) [cite: A1.1 21 NisanGrubum9_1.pdf, A2 GRUP NOTLARI 3.pdf]</li>
+                        <li>-ieren ile biten fiiller ve ayrılamayan ön ekli fiiller (be-, ge-, emp-, ent-, er-, miss-, ver-, zer-) 'ge-' almaz. (Örn: telefonieren -> telefoniert, besuchen -> besucht) [cite: A1.1 21 NisanGrubum9_1.pdf, A2 GRUP NOTLARI 3.pdf]</li>
+                    </ul>
+                    <hr/>
+                    <p><em>Bu notlar, "A1.1 21 NisanGrubum9_1.pdf" dosyasındaki seçilmiş konulardan derlenmiştir.</em></p>
+                `
+            },
+            {
+                title: "A2 Ders Notları",
+                id: "a2-notes",
+                preview: "Perfekt (Haben/Sein), Possessivartikel (İsmin Halleri), Sıfat Çekimi, Konjunktiv II (Dilek/Şart), Bağlaçlar, Dönüşlü Fiiller, Edatlı Fiiller, Yer Edatları, Edilgen Çatı (Passiv).",
+                content: `
+                    <h3>Perfekt mit Haben / Sein (Detay)</h3>
+                    <p>Perfekt, geçmişte olmuş ve bitmiş olayları anlatır. 'haben' veya 'sein' yardımcı fiili + Partizip II (fiilin 3. hali) ile kurulur. [cite: A2 GRUP NOTLARI 3.pdf]</p>
+                    <p><strong>Haben:</strong> Çoğu fiil, özellikle nesne alan (transitif) fiiller ve durumu ifade eden fiiller 'haben' ile kullanılır. [cite: A2 GRUP NOTLARI 3.pdf] Örn: Ich habe ein Buch gelesen.</p>
+                    <p><strong>Sein:</strong> Hareket bildiren (gehen, fahren, fliegen, kommen), durum değişikliği bildiren (aufwachen, einschlafen, sterben) ve bazı istisnai fiiller (bleiben, sein, werden) 'sein' ile kullanılır. [cite: A2 GRUP NOTLARI 3.pdf] Örn: Ich bin nach Hause gegangen.</p>
+                    <p><strong>Partizip II Kuralları:</strong></p>
+                    <ul>
+                        <li>Düzenli fiiller: ge- + kök + -t (machen -> gemacht) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li>Düzensiz fiiller: ge- + kök (genellikle sesli harf değişir) + -en (sehen -> gesehen) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li>Ayrılabilen fiiller: ön ek + ge- + kök + -t/-en (anrufen -> angerufen) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li>Ayrılamayan ön ekli (be-, ge-, er-, ver-, zer-, ent-, emp-, miss-) ve -ieren ile biten fiiller 'ge-' almaz: (besuchen -> besucht, studieren -> studiert) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                    </ul>
+
+                    <h3>Possessivartikel (İyelik Artikelleri - Detaylı)</h3>
+                    <p>Bir ismin kime ait olduğunu belirtir. İsmin cinsine, sayısına ve haline (Nominativ, Akkusativ, Dativ) göre çekimlenir. [cite: A2 GRUP NOTLARI 3.pdf]</p>
+                    <p>Örnek (mein - benim):</p>
+                    <table>
+                        <thead><tr><th>Hal</th><th>Maskulin (der)</th><th>Feminin (die)</th><th>Neutrum (das)</th><th>Plural (die)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Nominativ</td><td>mein Vater</td><td>meine Mutter</td><td>mein Kind</td><td>meine Kinder</td></tr>
+                            <tr><td>Akkusativ</td><td>meinen Vater</td><td>meine Mutter</td><td>mein Kind</td><td>meine Kinder</td></tr>
+                            <tr><td>Dativ</td><td>meinem Vater</td><td>meiner Mutter</td><td>meinem Kind</td><td>meinen Kindern</td></tr>
+                        </tbody>
+                    </table>
+                    <p>Diğer iyelik sıfatları (dein, sein, ihr, unser, euer, ihr/Ihr) da benzer şekilde çekimlenir. [cite: A2 GRUP NOTLARI 3.pdf] 'euer' çekimlenirken 'e' düşebilir (eure). [cite: A2 GRUP NOTLARI 3.pdf]</p>
+
+                    <h3>Sıfat Çekimi (Adjektivdeklination)</h3>
+                    <p>Sıfatlar, isimden önce geldiklerinde artikelin türüne (belirli, belirsiz, sıfır) ve ismin haline göre ek alırlar. [cite: A2 GRUP NOTLARI 3.pdf]</p>
+                    <ul>
+                        <li><strong>Belirli Artikelden Sonra:</strong>
+                            <ul>
+                                <li>Nominativ: -e (der alte Mann, die alte Frau, das alte Kind), Çoğul: -en (die alten Leute)</li>
+                                <li>Akkusativ: Eril: -en (den alten Mann), Dişil/Nötr/Çoğul: Nominativ ile aynı.</li>
+                                <li>Dativ: Hepsi -en (dem alten Mann, der alten Frau, dem alten Kind, den alten Leuten) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                            </ul>
+                        </li>
+                        <li><strong>Belirsiz Artikelden Sonra:</strong>
+                            <ul>
+                                <li>Nominativ: Eril: -er (ein alter Mann), Dişil: -e (eine alte Frau), Nötr: -es (ein altes Kind) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                                <li>Akkusativ: Eril: -en (einen alten Mann), Dişil/Nötr: Nominativ ile aynı. [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                                <li>Dativ: Hepsi -en.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Artikelsiz Kullanımda:</strong> Sıfat, normalde artikelin taşıyacağı eki alır. [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                    </ul>
+
+                    <h3>Konjunktiv II (Dilek/Şart Kipi - Detaylı)</h3>
+                    <p>Varsayımsal durumları, gerçek olmayan olayları, nazik istekleri ifade eder. [cite: A2 GRUP NOTLARI 3.pdf]</p>
+                    <p><strong>Şimdiki Zaman (Gegenwart):</strong></p>
+                    <ul>
+                        <li><strong>Haben:</strong> ich hätte, du hättest, er/sie/es hätte, wir hätten, ihr hättet, sie/Sie hätten [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li><strong>Sein:</strong> ich wäre, du wär(e)st, er/sie/es wäre, wir wären, ihr wäret, sie/Sie wären [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li><strong>Diğer fiiller:</strong> würden + mastar (Ich würde gehen - gitseydim) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li><strong>Modalverben:</strong> könnten (können), müssten (müssen), sollten (sollen), wollten (wollen), dürften (dürfen), möchten (mögen). [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                    </ul>
+                    <p><strong>Geçmiş Zaman (Vergangenheit):</strong> wäre/hätte + Partizip II (fiilin 3. hali).</p>
+                    <p>Örn: Ich <strong>wäre</strong> gekommen. (Gelmiş olurdum.) Ich <strong>hätte</strong> das gemacht. (Bunu yapmış olurdum.) [cite: A2 GRUP NOTLARI 3.pdf]</p>
+                    <p><strong>Kullanım Alanları:</strong> Gerçek dışı şart cümleleri (Wenn ich reich wäre, würde ich reisen. - Zengin olsaydım seyahat ederdim), nazik rica (Könnten Sie mir helfen? - Bana yardım edebilir miydiniz?), dilek (Ich hätte gern ein Haus. - Bir evim olmasını isterdim), tavsiye (An deiner Stelle würde ich... - Senin yerinde olsam...). [cite: A2 GRUP NOTLARI 3.pdf]</p>
+
+                    <h3>Bağlaçlar (Konjunktionen)</h3>
+                    <p>Cümleleri birbirine bağlar.</p>
+                    <ul>
+                        <li><strong>Temel Cümle Bağlaçları (Sıralamayı değiştirmez, Pozisyon 0):</strong> und (ve), aber (ama), oder (veya), denn (çünkü), sondern (aksine, bilakis - olumsuz bir ifadeden sonra gelir). [cite: A2 GRUP NOTLARI 3.pdf] Örn: Ich lerne Deutsch, <strong>denn</strong> ich möchte in Deutschland studieren.</li>
+                        <li><strong>Sıralamayı Değiştiren Bağlaçlar (Çekimli fiil bağlaçtan hemen sonra gelir):</strong> deshalb, darum, deswegen, trotzdem. [cite: A2 GRUP NOTLARI 3.pdf] Örn: Ich bin krank, <strong>deshalb</strong> bleibe ich zu Hause.</li>
+                        <li><strong>Yan Cümle Bağlaçları (Çekimli fiili yan cümlenin sonuna atar):</strong>
+                            <ul>
+                                <li><strong>weil/da (çünkü):</strong> Ich lerne Deutsch, <strong>weil</strong> es mir Spaß <strong>macht</strong>. [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                                <li><strong>dass (ki, -dığını):</strong> Ich weiß, <strong>dass</strong> du kommst. [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                                <li><strong>ob (-ip -mediğini):</strong> Ich weiß nicht, <strong>ob</strong> er kommt. [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                                <li><strong>wenn (eğer; -dığında - tekrarlanan veya gelecekteki olaylar):</strong> <strong>Wenn</strong> ich Zeit habe, lese ich. [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                                <li><strong>als (-dığında - geçmişte bir kez olmuş olay):</strong> <strong>Als</strong> ich ein Kind war, spielte ich viel. [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <h3>Passiv (Edilgen Çatı)</h3>
+                    <p>Eylemi yapan değil, yapılan iş vurgulanır. "werden" yardımcı fiili ve fiilin Partizip II hali ile kurulur. [cite: A2 GRUP NOTLARI 3.pdf]</p>
+                    <ul>
+                        <li><strong>Präsens:</strong> Nesne + wird + Partizip II. (Das Auto wird repariert. - Araba tamir ediliyor.) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li><strong>Präteritum:</strong> Nesne + wurde + Partizip II. (Das Auto wurde repariert. - Araba tamir edildi.) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                        <li><strong>Perfekt:</strong> Nesne + ist + Partizip II + worden. (Das Auto ist repariert worden. - Araba tamir edildi/edilmiş.) [cite: A2 GRUP NOTLARI 3.pdf]</li>
+                    </ul>
+                    <p>Eylemi yapan belirtilmek istenirse "von + Dativ" (kişiler/kurumlar) veya "durch + Akkusativ" (araçlar/yöntemler) kullanılır. [cite: A2 GRUP NOTLARI 3.pdf]</p>
+                    <hr/>
+                    <p><em>Bu notlar, "A2 GRUP NOTLARI 3.pdf" dosyasındaki seçilmiş konulardan derlenmiştir.</em></p>
+                `
+            }
+        ];
+
+
+        let currentWords = [];
+        let currentWordIndex = 0;
+
+        const homeView = document.getElementById('homeView');
+        const wordView = document.getElementById('wordView');
+        const notesView = document.getElementById('notesView'); 
+        const wordThemeSelectionView = document.getElementById('wordThemeSelectionView');
+        const wordCardDisplayView = document.getElementById('wordCardDisplayView');
+        const testView = document.getElementById('testView');
+
+        const goToWordSectionBtn = document.getElementById('goToWordSectionBtn');
+        const goToTestSectionBtn = document.getElementById('goToTestSectionBtn');
+        const goToNotesSectionBtn = document.getElementById('goToNotesSectionBtn'); 
+        const backToHomeFromWordsBtn = document.getElementById('backToHomeFromWordsBtn');
+        const backToThemesBtn = document.getElementById('backToThemesBtn');
+        const backToHomeFromTestBtn = document.getElementById('backToHomeFromTestBtn');
+        const backToHomeFromNotesBtn = document.getElementById('backToHomeFromNotesBtn'); 
+        
+        const themeListContainer = document.getElementById('themeListContainer');
+        const noThemesMessage = document.getElementById('noThemesMessage');
+        
+        const germanWordEl = document.getElementById('germanWord');
+        const turkishWordEl = document.getElementById('turkishWord');
+        const exampleSentenceEl = document.getElementById('exampleSentence');
+        const pronunciationBtn = document.getElementById('pronunciationBtn');
+        const flipCardEl = document.getElementById('flipCard');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const flipBtn = document.getElementById('flipBtn');
+        const progressBarEl = document.getElementById('progressBar');
+        const progressInfoEl = document.getElementById('progress-info');
+        const noWordsMessageEl = document.getElementById('noWordsMessage');
+        const htmlEl = document.documentElement;
+        
+        const themeMenuButton = document.getElementById('themeMenuButton');
+        const themeOptionsMenu = document.getElementById('themeOptionsMenu');
+
+        const noteSelectionContainer = document.getElementById('noteSelectionContainer'); 
+        const noteDisplayArea = document.getElementById('noteDisplayArea'); 
+
+        const testContentEl = document.getElementById('testContent');
+        const testQuestionContainer = document.getElementById('testQuestionContainer');
+        const testQuestionEl = document.getElementById('testQuestion');
+        const testOptionsContainer = document.getElementById('testOptionsContainer');
+        const testFeedbackEl = document.getElementById('testFeedback');
+        const nextTestQuestionBtn = document.getElementById('nextTestQuestionBtn');
+        const currentQuestionNumberEl = document.getElementById('currentQuestionNumber');
+        const totalTestQuestionsEl = document.getElementById('totalTestQuestions');
+        const testResultsViewEl = document.getElementById('testResultsView');
+        const testScoreEl = document.getElementById('testScore');
+        const restartTestBtn = document.getElementById('restartTestBtn');
+        const noTestWordsMessageEl = document.getElementById('noTestWordsMessage');
+
+        const synth = window.speechSynthesis;
+        let utterance = new SpeechSynthesisUtterance();
+        utterance.lang = 'de-DE';
+
+        let testQuestions = [];
+        let currentTestQuestionIndex = 0;
+        let score = 0;
+        const TOTAL_QUESTIONS_PER_TEST = 10;
+
+        const uiThemes = [
+            { name: 'light', icon: 'fa-sun', text: 'Açık Tema' },
+            { name: 'dark', icon: 'fa-moon', text: 'Koyu Tema' },
+            { name: 'oled', icon: 'fa-adjust', text: 'OLED Karanlık' },
+            { name: 'forest', icon: 'fa-leaf', text: 'Orman Teması' },
+            { name: 'ocean', icon: 'fa-water', text: 'Okyanus Teması' },
+            { name: 'pastel', icon: 'fa-palette', text: 'Pastel Tema' }
+        ];
+
+        function populateThemeOptionsMenu() {
+            themeOptionsMenu.innerHTML = '';
+            uiThemes.forEach(theme => {
+                const button = document.createElement('button');
+                button.dataset.theme = theme.name;
+                button.classList.add('theme-option-item', 'w-full', 'text-left', 'px-4', 'py-2', 'text-sm', 'flex', 'items-center');
+                button.innerHTML = `<i class="fas ${theme.icon} w-5 mr-2"></i> ${theme.text}`;
+                themeOptionsMenu.appendChild(button);
+            });
+        }
+
+        function setUITHEME(themeName) {
+            const themeClasses = uiThemes.map(t => `theme-${t.name}`);
+            htmlEl.classList.remove(...themeClasses);
+            htmlEl.classList.add(`theme-${themeName}`);
+            localStorage.setItem('ui-theme', themeName);
+            
+            document.querySelectorAll('#themeOptionsMenu .theme-option-item').forEach(btn => {
+                btn.classList.remove('active-item');
+                if (btn.dataset.theme === themeName) {
+                    btn.classList.add('active-item');
+                }
+            });
+        }
+        
+        function loadUITHEMEPreference() {
+            const savedTheme = localStorage.getItem('ui-theme') || 'light';
+            setUITHEME(savedTheme);
+        }
+
+        themeMenuButton.addEventListener('click', (event) => {
+            event.stopPropagation(); 
+            themeOptionsMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!themeMenuButton.contains(event.target) && !themeOptionsMenu.contains(event.target)) {
+                themeOptionsMenu.classList.add('hidden');
+            }
+        });
+
+        themeOptionsMenu.addEventListener('click', (event) => {
+            const themeButton = event.target.closest('.theme-option-item');
+            if (themeButton) {
+                const theme = themeButton.dataset.theme;
+                setUITHEME(theme);
+                themeOptionsMenu.classList.add('hidden'); 
+            }
+        });
+
+        function showView(viewToShow) {
+            [homeView, wordView, testView, notesView].forEach(v => v.classList.add('hidden'));
+            viewToShow.classList.remove('hidden');
+            
+            if (viewToShow === wordView) {
+                showWordSectionView('themes');
+                renderThemeSelectionList(); 
+            } else if (viewToShow === notesView) {
+                populateNoteTitles();
+                if (notesData.length > 0) {
+                    const firstActiveButton = noteSelectionContainer.querySelector('.note-title-button.active-note');
+                    if (!firstActiveButton && notesData.length > 0) { 
+                        const firstButton = noteSelectionContainer.querySelector('.note-title-button');
+                        if (firstButton) {
+                            firstButton.classList.add('active-note');
+                            displayNoteContent(notesData[0].id);
+                        }
+                    } else if (!firstActiveButton && notesData.length === 0){
+                         noteDisplayArea.innerHTML = '<p class="text-muted text-center">Görüntülemek için bir not başlığı seçin veya henüz not eklenmemiş.</p>';
+                    }
+                } else {
+                    noteDisplayArea.innerHTML = '<p class="text-muted text-center">Gösterilecek not bulunmamaktadır.</p>';
+                }
+            }
+        }
+
+        function showWordSectionView(subView) { 
+            wordThemeSelectionView.classList.toggle('hidden', subView !== 'themes');
+            wordCardDisplayView.classList.toggle('hidden', subView !== 'cards');
+        }
+
+        function displayWordCard() {
+            wordCardDisplayView.classList.remove('hidden');
+            wordThemeSelectionView.classList.add('hidden');
+
+            if (currentWords.length === 0) {
+                germanWordEl.textContent = '';
+                turkishWordEl.textContent = '';
+                exampleSentenceEl.textContent = '';
+                if(pronunciationBtn) pronunciationBtn.disabled = true;
+                if(prevBtn) prevBtn.disabled = true;
+                if(nextBtn) nextBtn.disabled = true;
+                if(flipBtn) flipBtn.disabled = true;
+                if(progressInfoEl) progressInfoEl.textContent = '';
+                if(progressBarEl) progressBarEl.style.width = '0%';
+                noWordsMessageEl.classList.remove('hidden');
+                flipCardEl.classList.add('hidden');
+                const navControls = document.querySelector('#wordCardDisplayView .navigation-controls');
+                if(navControls) navControls.classList.add('hidden');
+                const progressBarCont = document.getElementById('progressBarContainer');
+                if(progressBarCont) progressBarCont.classList.add('hidden');
+                return;
+            }
+            
+            noWordsMessageEl.classList.add('hidden');
+            flipCardEl.classList.remove('hidden');
+            const navControls = document.querySelector('#wordCardDisplayView .navigation-controls');
+            if(navControls) navControls.classList.remove('hidden');
+            const progressBarCont = document.getElementById('progressBarContainer');
+            if(progressBarCont) progressBarCont.classList.remove('hidden');
+
+            const wordData = currentWords[currentWordIndex];
+            
+            germanWordEl.textContent = wordData.german; 
+            turkishWordEl.textContent = wordData.turkish;
+            exampleSentenceEl.textContent = wordData.example || "";
+            utterance.text = wordData.pronunciation || wordData.german; 
+
+            updateNavigationButtons();
+            updateProgressBar();
+            if (flipCardEl.classList.contains('flipped')) {
+                flipCardEl.classList.remove('flipped');
+            }
+            if(pronunciationBtn) pronunciationBtn.disabled = false;
+            if(flipBtn) flipBtn.disabled = false;
+        }
+
+        function updateNavigationButtons() {
+            if(prevBtn) prevBtn.disabled = currentWordIndex === 0;
+            if(nextBtn) nextBtn.disabled = currentWordIndex === currentWords.length - 1;
+        }
+        
+        function updateProgressBar() {
+            if (currentWords.length > 0 && progressBarEl) {
+                const progressPercentage = ((currentWordIndex + 1) / currentWords.length) * 100;
+                progressBarEl.style.width = `${progressPercentage}%`;
+                if(progressInfoEl) progressInfoEl.textContent = `Kelime ${currentWordIndex + 1} / ${currentWords.length}`;
+            } else if (progressBarEl) {
+                progressBarEl.style.width = '0%';
+                if(progressInfoEl) progressInfoEl.textContent = '';
+            }
+        }
+
+        function flipCardAction() { flipCardEl.classList.toggle('flipped'); }
+
+        function speakWord() {
+            if (synth.speaking) synth.cancel();
+            setTimeout(() => {
+                let voices = synth.getVoices();
+                let germanVoice = voices.find(voice => voice.lang === 'de-DE' || voice.lang.startsWith('de-'));
+                if (germanVoice) utterance.voice = germanVoice;
+                else console.warn("Almanca (de-DE) seslendirme motoru bulunamadı.");
+                synth.speak(utterance);
+            }, 100);
+        }
+        
+        if (synth.getVoices().length === 0) synth.onvoiceschanged = () => {
+            console.log("Sesler yüklendi.");
+        };
+
+        function nextWordCard() {
+            if (currentWordIndex < currentWords.length - 1) {
+                currentWordIndex++;
+                displayWordCard();
+            }
+        }
+
+        function prevWordCard() {
+            if (currentWordIndex > 0) {
+                currentWordIndex--;
+                displayWordCard();
+            }
+        }
+
+        function renderThemeSelectionList() {
+            const themesData = allWords.reduce((acc, word) => {
+                acc[word.theme] = (acc[word.theme] || 0) + 1;
+                return acc;
+            }, {});
+            const sortedThemes = Object.keys(themesData).sort((a,b) => {
+                if (a === "TELC Kelimeleri") return 1; 
+                if (b === "TELC Kelimeleri") return -1;
+                return a.localeCompare(b); 
+            });
+
+            themeListContainer.innerHTML = '';
+            if (sortedThemes.length === 0) {
+                noThemesMessage.classList.remove('hidden');
+                return;
+            }
+            noThemesMessage.classList.add('hidden');
+
+            sortedThemes.forEach(themeName => {
+                const wordCount = themesData[themeName];
+                const themeItem = document.createElement('div');
+                themeItem.classList.add('theme-list-item', 'theme-list-item-bg', 'hover:theme-list-item-hover-bg', 'flex', 'justify-between', 'items-center');
+                themeItem.innerHTML = `
+                    <div>
+                        <h3 class="text-xl font-semibold">${themeName}</h3>
+                        <p class="text-sm text-muted">${wordCount} kelime</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-muted"></i>
+                `;
+                themeItem.addEventListener('click', () => {
+                    currentWords = allWords.filter(word => word.theme === themeName);
+                    currentWordIndex = 0;
+                    showWordSectionView('cards');
+                    displayWordCard();
+                });
+                themeListContainer.appendChild(themeItem);
+            });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function startTest() {
+            const testableWords = allWords; 
+            
+            if (testableWords.length < 4) {
+                testContentEl.classList.add('hidden');
+                testResultsViewEl.classList.add('hidden');
+                noTestWordsMessageEl.classList.remove('hidden');
+                return;
+            }
+            noTestWordsMessageEl.classList.add('hidden');
+            testContentEl.classList.remove('hidden');
+
+            score = 0;
+            currentTestQuestionIndex = 0;
+            let availableTestWords = shuffleArray([...testableWords]);
+            testQuestions = availableTestWords.slice(0, Math.min(TOTAL_QUESTIONS_PER_TEST, availableTestWords.length));
+            
+            if (testQuestions.length === 0) {
+                 testContentEl.classList.add('hidden');
+                 noTestWordsMessageEl.classList.remove('hidden');
+                 return;
+            }
+            totalTestQuestionsEl.textContent = testQuestions.length;
+
+            testResultsViewEl.classList.add('hidden');
+            testQuestionContainer.classList.remove('hidden');
+            nextTestQuestionBtn.classList.add('hidden');
+            displayTestQuestion();
+        }
+
+        function displayTestQuestion() {
+            testFeedbackEl.classList.add('hidden');
+            testFeedbackEl.textContent = '';
+            nextTestQuestionBtn.classList.add('hidden');
+
+            if (currentTestQuestionIndex >= testQuestions.length) {
+                showTestResults();
+                return;
+            }
+
+            const currentQuestion = testQuestions[currentTestQuestionIndex];
+            currentQuestionNumberEl.textContent = currentTestQuestionIndex + 1;
+            
+            let questionWordDisplay = currentQuestion.german; 
+
+            testQuestionEl.innerHTML = `<span id="testGermanWordToPronounce" class="test-question-word-clickable">${questionWordDisplay}</span> kelimesinin Türkçe anlamı nedir?`;
+            
+            const germanWordInTest = document.getElementById('testGermanWordToPronounce');
+            if (germanWordInTest) {
+                germanWordInTest.addEventListener('click', () => {
+                    utterance.text = currentQuestion.pronunciation || questionWordDisplay;
+                    speakWord();
+                });
+            }
+
+            const correctAnswer = currentQuestion.turkish;
+            let options = [correctAnswer];
+            const otherWords = allWords.filter(word => word.turkish !== correctAnswer && word.turkish.trim() !== "");
+            shuffleArray(otherWords);
+
+            for (let i = 0; options.length < 4 && i < otherWords.length; i++) {
+                if (!options.includes(otherWords[i].turkish)) {
+                    options.push(otherWords[i].turkish);
+                }
+            }
+            
+            while(options.length < Math.min(4, allWords.length) && options.length < allWords.length) {
+                 let tempOption = allWords[Math.floor(Math.random() * allWords.length)].turkish;
+                 if(!options.includes(tempOption)  && tempOption.trim() !== "") options.push(tempOption);
+                 if(options.length >= allWords.length || options.length >=4) break; 
+            }
+
+            shuffleArray(options);
+            testOptionsContainer.innerHTML = '';
+
+            options.forEach(optionText => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = optionText;
+                optionButton.classList.add('test-option-btn', 'test-option-btn-bg', 'hover:test-option-btn-hover-bg', 'test-option-btn-text-color');
+                optionButton.addEventListener('click', () => handleAnswerSelection(optionButton, optionText, correctAnswer));
+                testOptionsContainer.appendChild(optionButton);
+            });
+        }
+
+        function handleAnswerSelection(buttonEl, selectedAnswer, correctAnswer) {
+            document.querySelectorAll('#testOptionsContainer .test-option-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:test-option-btn-hover-bg', 'dark:hover:test-option-btn-hover-bg', 'hover:scale-102');
+            });
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                buttonEl.classList.add('correct');
+                testFeedbackEl.textContent = "Doğru!";
+                testFeedbackEl.className = 'test-feedback correct';
+            } else {
+                buttonEl.classList.add('incorrect');
+                testFeedbackEl.textContent = `Yanlış! Doğru cevap: ${correctAnswer}`;
+                testFeedbackEl.className = 'test-feedback incorrect';
+                document.querySelectorAll('#testOptionsContainer .test-option-btn').forEach(btn => {
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+            testFeedbackEl.classList.remove('hidden');
+            nextTestQuestionBtn.classList.remove('hidden');
+        }
+        
+        nextTestQuestionBtn.addEventListener('click', () => {
+            currentTestQuestionIndex++;
+            displayTestQuestion();
+             document.querySelectorAll('#testOptionsContainer .test-option-btn').forEach(btn => {
+                btn.disabled = false; 
+            });
+        });
+
+        function showTestResults() {
+            testQuestionContainer.classList.add('hidden');
+            nextTestQuestionBtn.classList.add('hidden');
+            testFeedbackEl.classList.add('hidden');
+            testResultsViewEl.classList.remove('hidden');
+            const finalScoreText = `${score} / ${testQuestions.length}`;
+            testScoreEl.textContent = finalScoreText;
+        }
+        
+        restartTestBtn.addEventListener('click', startTest);
+
+        function populateNoteTitles() {
+            noteSelectionContainer.innerHTML = '';
+            if (notesData.length === 0) {
+                noteDisplayArea.innerHTML = '<p class="text-muted text-center">Gösterilecek not bulunmamaktadır.</p>';
+                return;
+            }
+            notesData.forEach(note => {
+                const button = document.createElement('button');
+                button.dataset.noteId = note.id;
+                button.classList.add('note-title-button'); 
+                button.innerHTML = `
+                    <span class="note-title-main">${note.title}</span>
+                    <span class="note-title-preview">${note.preview}</span>
+                `;
+                button.addEventListener('click', () => {
+                    displayNoteContent(note.id);
+                    document.querySelectorAll('.note-title-button').forEach(btn => btn.classList.remove('active-note'));
+                    button.classList.add('active-note');
+                });
+                noteSelectionContainer.appendChild(button);
+            });
+            if (notesData.length > 0) {
+                const firstButton = noteSelectionContainer.querySelector('.note-title-button');
+                if(firstButton) {
+                    firstButton.classList.add('active-note'); 
+                    displayNoteContent(notesData[0].id);    
+                }
+            } else {
+                 noteDisplayArea.innerHTML = '<p class="text-muted text-center">Görüntülemek için bir not başlığı seçin.</p>';
+            }
+        }
+
+        function displayNoteContent(noteId) {
+            const note = notesData.find(n => n.id === noteId);
+            if (note) {
+                noteDisplayArea.innerHTML = note.content;
+                noteDisplayArea.scrollTop = 0; 
+            } else {
+                noteDisplayArea.innerHTML = '<p class="text-muted text-center">Not bulunamadı.</p>';
+            }
+        }
+
+        // Olay Dinleyicileri
+        goToWordSectionBtn.addEventListener('click', () => {
+            showView(wordView);
+        });
+        goToTestSectionBtn.addEventListener('click', () => {
+            showView(testView);
+            startTest();
+        });
+        goToNotesSectionBtn.addEventListener('click', () => { 
+            showView(notesView);
+        });
+
+        backToHomeFromWordsBtn.addEventListener('click', () => showView(homeView));
+        backToThemesBtn.addEventListener('click', () => showWordSectionView('themes'));
+        backToHomeFromTestBtn.addEventListener('click', () => showView(homeView));
+        backToHomeFromNotesBtn.addEventListener('click', () => showView(homeView)); 
+
+        if(pronunciationBtn) pronunciationBtn.addEventListener('click', speakWord);
+        if(flipBtn) flipBtn.addEventListener('click', flipCardAction);
+        if(flipCardEl) flipCardEl.addEventListener('click', (event) => {
+            if (event.target.closest('#pronunciationBtn')) return;
+            flipCardAction();
+        });
+        if(nextBtn) nextBtn.addEventListener('click', nextWordCard);
+        if(prevBtn) prevBtn.addEventListener('click', prevWordCard);
+        
+        // Başlangıç
+        populateThemeOptionsMenu(); 
+        loadUITHEMEPreference(); 
+        showView(homeView);
+
+    </script>
+</body>
+</html>
